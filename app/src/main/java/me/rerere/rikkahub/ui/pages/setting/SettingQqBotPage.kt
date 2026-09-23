@@ -111,7 +111,7 @@ fun SettingQqBotPage(vm: SettingVM = koinViewModel()) {
                     )
                     item(
                         headlineContent = { Text("Asistente vinculado") },
-                        supportingContent = { Text("Usar siempre el asistente actual: ${settings.getCurrentAssistant().name.ifBlank { "未命名" }}") }
+                        supportingContent = { Text("Usar siempre el asistente actual: ${settings.getCurrentAssistant().name.ifBlank { "Sin nombre" }}") }
                     )
                 }
             }
@@ -128,7 +128,7 @@ fun SettingQqBotPage(vm: SettingVM = koinViewModel()) {
                             OutlinedTextField(
                                 value = botSetting.appId,
                                 onValueChange = { update(botSetting.copy(appId = it.trim())) },
-                                placeholder = { Text("如 102345678") },
+                                placeholder = { Text("p. ej. 102345678") },
                                 modifier = Modifier.fillMaxWidth(),
                                 singleLine = true,
                                 shape = MaterialTheme.shapes.small,
@@ -191,7 +191,7 @@ fun SettingQqBotPage(vm: SettingVM = koinViewModel()) {
                     }
                     if (botSetting.enabled) {
                         item(
-                            headlineContent = { Text("Ejecución提示") },
+                            headlineContent = { Text("Notas de ejecución") },
                             supportingContent = { Text("El token se renueva automáticamente. Las respuestas deben enviarse dentro de los 5 minutos posteriores a recibir el mensaje.") }
                         )
                     }
