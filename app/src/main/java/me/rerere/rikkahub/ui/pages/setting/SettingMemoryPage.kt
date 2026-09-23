@@ -291,7 +291,7 @@ fun SettingMemoryPage(vm: SettingVM = koinViewModel()) {
             item {
                 Text("Modo de memoria", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
                 Text(
-                    "Actual: ${strategy?.label ?: "自定义"}",
+                    "Actual: ${strategy?.label ?: "Personalizado"}",
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(bottom = 8.dp),
                 )
