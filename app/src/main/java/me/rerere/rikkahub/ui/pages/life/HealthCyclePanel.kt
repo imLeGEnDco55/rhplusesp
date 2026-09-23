@@ -68,10 +68,10 @@ private data class DailyBodyLog(
     val note: String = "",
 )
 
-private val symptomOptions = listOf("腹痛", "腰酸", "头痛", "胸胀", "疲惫", "失眠", "食欲变化", "皮肤状态")
-private val moodOptions = listOf("开心", "平静", "敏感", "烦躁", "低落", "焦虑")
-private val energyOptions = listOf("高", "中", "低")
-private val flowOptions = listOf("少量", "中等", "较多")
+private val symptomOptions = listOf("Dolor abdominal", "Dolor lumbar", "Dolor de cabeza", "Sensibilidad en el pecho", "Cansancio", "Insomnio", "Cambios de apetito", "Estado de la piel")
+private val moodOptions = listOf("Feliz", "Tranquila", "Sensible", "Irritable", "Decaída", "Ansiosa")
+private val energyOptions = listOf("Alta", "Media", "Baja")
+private val flowOptions = listOf("Ligero", "Medio", "Abundante")
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -146,25 +146,25 @@ fun HealthCyclePanel() {
                     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
                         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                             Text("🌷 PERIOD & BODY", color = Color(0xFFB85F78), style = MaterialTheme.typography.labelLarge)
-                            Text("生理周期", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = Color(0xFF57454B))
+                            Text("Ciclo menstrual", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = Color(0xFF57454B))
                             Text(
                                 when {
-                                    dayInPeriod != null && currentPeriod?.end != null -> "经期第 $dayInPeriod 天，已按实际开始和结束记录。"
-                                    dayInPeriod != null -> "经期第 $dayInPeriod 天，结束日暂按 $effectivePeriod 天经期预测。"
-                                    openPeriod != null -> "这次经期还没有记录结束日，预测区间已结束，可以按实际日期补记。"
-                                    daysUntil != null && daysUntil >= 0 -> "预计还有 $daysUntil 天到下次经期。"
-                                    predictedStart != null -> "预计日期已过，可以按实际情况记录新的开始日。"
-                                    else -> "记录第一次经期后，先按 30 天周期、7 天经期帮你预测。"
+                                    dayInPeriod != null && currentPeriod?.end != null -> "Día $dayInPeriod del periodo, registrado según las fechas reales de inicio y fin."
+                                    dayInPeriod != null -> "Día $dayInPeriod del periodo; la fecha de fin se estima usando $effectivePeriod días de duración."
+                                    openPeriod != null -> "Este periodo aún no tiene fecha de fin registrada. El intervalo previsto ya terminó; puedes añadir la fecha real."
+                                    daysUntil != null && daysUntil >= 0 -> "Se estiman $daysUntil días para el próximo periodo."
+                                    predictedStart != null -> "La fecha prevista ya pasó; registra una nueva fecha de inicio según corresponda."
+                                    else -> "Después del primer registro, se usará inicialmente un ciclo de 30 días y un periodo de 7 días para estimar."
                                 },
                                 color = Color(0xFF806B72),
                             )
                         }
-                        FilledTonalButton(onClick = { showSettings = true }, shape = RoundedCornerShape(16.dp)) { Text("设置") }
+                        FilledTonalButton(onClick = { showSettings = true }, shape = RoundedCornerShape(16.dp)) { Text("Ajustes") }
                     }
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        HealthStat(if (learnedCycle != null) "平均周期" else "预测周期", "${effectiveCycle}天", Modifier.weight(1f))
-                        HealthStat(if (learnedPeriod != null) "平均经期" else "预测经期", "${effectivePeriod}天", Modifier.weight(1f))
-                        HealthStat("记录", "${periods.size}次", Modifier.weight(1f))
+                        HealthStat(if (learnedCycle != null) "Ciclo promedio" else "Ciclo previsto", "${effectiveCycle}天", Modifier.weight(1f))
+                        HealthStat(if (learnedPeriod != null) "Duración promedio" else "Duración prevista", "${effectivePeriod}天", Modifier.weight(1f))
+                        HealthStat("Registros", "${periods.size} veces", Modifier.weight(1f))
                     }
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         Button(
@@ -178,7 +178,7 @@ fun HealthCyclePanel() {
                             enabled = openPeriod == null,
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFC96882)),
                             shape = RoundedCornerShape(18.dp),
-                        ) { Text(if (openPeriod == null) "今天来了" else "本轮已开始") }
+                        ) { Text(if (openPeriod == null) "Empezó hoy" else "Este ciclo ya comenzó") }
                         OutlinedButton(
                             onClick = {
                                 openPeriod?.let { active ->
@@ -189,14 +189,14 @@ fun HealthCyclePanel() {
                             modifier = Modifier.weight(1f),
                             enabled = openPeriod != null,
                             shape = RoundedCornerShape(18.dp),
-                        ) { Text("今天结束") }
+                        ) { Text("Terminó hoy") }
                     }
                     if (periods.isNotEmpty()) {
                         Text(
                             when {
-                                learnedCycle == null && learnedPeriod == null -> "数据还少：先用 30 天周期 / 7 天经期预测；记录多起来后会自动学习你的节奏。"
-                                learnedCycle != null && learnedPeriod != null -> "已根据最近记录自动调整周期与经期长度。"
-                                else -> "已经开始学习你的记录；数据再多一些，预测会继续按你的实际周期调整。"
+                                learnedCycle == null && learnedPeriod == null -> "Aún hay pocos datos: se usará un ciclo de 30 días y 7 días de periodo; con más registros, la estimación se adaptará a tu ritmo."
+                                learnedCycle != null && learnedPeriod != null -> "El ciclo y la duración se ajustaron automáticamente según los registros recientes."
+                                else -> "Ya se están aprendiendo tus registros; con más datos, las predicciones seguirán ajustándose a tu ciclo real."
                             },
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -217,7 +217,7 @@ fun HealthCyclePanel() {
                     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                         Text("${month.year}年 ${month.monthValue}月", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
                         TextButton(onClick = { month = month.minusMonths(1) }) { Text("‹") }
-                        TextButton(onClick = { month = YearMonth.now(); selectedDate = today }) { Text("今天") }
+                        TextButton(onClick = { month = YearMonth.now(); selectedDate = today }) { Text("Hoy") }
                         TextButton(onClick = { month = month.plusMonths(1) }) { Text("›") }
                     }
                     HealthMonthCalendar(month, selectedDate, periods, logs, predictedStart, effectivePeriod) { selectedDate = it }
@@ -236,16 +236,16 @@ fun HealthCyclePanel() {
                 Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
-                            Text(selectedDate.format(DateTimeFormatter.ofPattern("M月d日 EEE")), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                            Text(if (log == null) "这一天还没有身体记录" else "已经记下今天的身体状态", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(selectedDate.format(DateTimeFormatter.ofPattern("M月dDom EEE")), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                            Text(if (log == null) "Aún no hay registro corporal para este día" else "Estado corporal de hoy registrado", color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
-                        FilledTonalButton(onClick = { showLogEditor = true }, shape = RoundedCornerShape(16.dp)) { Text(if (log == null) "记录" else "编辑") }
+                        FilledTonalButton(onClick = { showLogEditor = true }, shape = RoundedCornerShape(16.dp)) { Text(if (log == null) "Registros" else "Editar") }
                     }
                     log?.let {
-                        if (it.flow.isNotBlank()) Text("🩸 流量：${it.flow}")
-                        if (it.symptoms.isNotEmpty()) Text("🌿 身体：${it.symptoms.joinToString("、")}")
-                        if (it.mood.isNotBlank()) Text("💭 心情：${it.mood}")
-                        if (it.energy.isNotBlank()) Text("☁️ 精力：${it.energy}")
+                        if (it.flow.isNotBlank()) Text("🩸 Flujo: ${it.flow}")
+                        if (it.symptoms.isNotEmpty()) Text("🌿 Cuerpo: ${it.symptoms.joinToString("、")}")
+                        if (it.mood.isNotBlank()) Text("💭 Ánimo: ${it.mood}")
+                        if (it.energy.isNotBlank()) Text("☁️ Energía: ${it.energy}")
                         if (it.note.isNotBlank()) Text(it.note, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
@@ -255,16 +255,16 @@ fun HealthCyclePanel() {
         item {
             Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(22.dp), color = Color(0xFFF4F0F8)) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Text("♡ TA 能知道什么", fontWeight = FontWeight.Bold, color = Color(0xFF735F82))
+                    Text("♡ Qué puede saber la IA", fontWeight = FontWeight.Bold, color = Color(0xFF735F82))
                     Text(
-                        if (aiAllowed) "当前允许 AI 读取最近的周期阶段与身体记录，用于更自然地关心你。" else "当前已关闭，聊天 AI 不会收到周期与身体记录。",
+                        if (aiAllowed) "Actualmente permites que la IA lea la fase reciente del ciclo y registros corporales para responder de forma más natural." else "Actualmente está desactivado; la IA del chat no recibirá datos del ciclo ni registros corporales.",
                         color = Color(0xFF766E7B),
                     )
-                    Text("只提供当前状态和最近记录，不会每次发送完整周期历史。", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("Sólo se comparte el estado actual y los registros recientes; no se envía todo el historial del ciclo en cada turno.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }
-        item { Text("周期预测只根据你记录的历史日期做简单估算，不用于诊断、避孕或替代医疗建议。", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+        item { Text("Las predicciones del ciclo son estimaciones simples basadas en tus fechas registradas y no sirven para diagnóstico, anticoncepción ni sustituyen consejo médico.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
     }
 
     if (showLogEditor) {
@@ -319,7 +319,7 @@ private fun HealthMonthCalendar(
     val dates = (0 until 42).map { start.plusDays(it.toLong()) }
     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Row(Modifier.fillMaxWidth()) {
-            listOf("一", "二", "三", "四", "五", "六", "日").forEach { Text(it, Modifier.weight(1f), textAlign = TextAlign.Center, color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.labelSmall) }
+            listOf("Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom").forEach { Text(it, Modifier.weight(1f), textAlign = TextAlign.Center, color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.labelSmall) }
         }
         dates.chunked(7).forEach { week ->
             Row(Modifier.fillMaxWidth()) {
@@ -359,9 +359,9 @@ private fun HealthMonthCalendar(
             }
         }
         Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-            Text("● 已记录经期", color = Color(0xFFC9637D), style = MaterialTheme.typography.labelSmall)
-            Text("○ 预测经期", color = Color(0xFFD99AAF), style = MaterialTheme.typography.labelSmall)
-            Text("• 身体记录", color = Color(0xFF8B75A0), style = MaterialTheme.typography.labelSmall)
+            Text("● Periodo registrado", color = Color(0xFFC9637D), style = MaterialTheme.typography.labelSmall)
+            Text("○ Periodo previsto", color = Color(0xFFD99AAF), style = MaterialTheme.typography.labelSmall)
+            Text("• Registro corporal", color = Color(0xFF8B75A0), style = MaterialTheme.typography.labelSmall)
         }
     }
 }
@@ -376,22 +376,22 @@ private fun BodyLogDialog(date: LocalDate, initial: DailyBodyLog?, onDismiss: ()
     AlertDialog(
         onDismissRequest = onDismiss,
         shape = RoundedCornerShape(28.dp),
-        title = { Text("🌷 ${date.monthValue}月${date.dayOfMonth}日") },
+        title = { Text("🌷 ${date.monthValue}月${date.dayOfMonth}Dom") },
         text = {
             LazyColumn(Modifier.heightIn(max = 560.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                item { Text("经量", fontWeight = FontWeight.Bold) }
+                item { Text("Flujo", fontWeight = FontWeight.Bold) }
                 item { ChoiceRow(flowOptions, flow) { flow = if (flow == it) "" else it } }
-                item { Text("身体感受", fontWeight = FontWeight.Bold) }
+                item { Text("Sensaciones físicas", fontWeight = FontWeight.Bold) }
                 item { LazyRow(horizontalArrangement = Arrangement.spacedBy(7.dp)) { items(symptomOptions) { symptom -> FilterChip(selected = symptom in selectedSymptoms, onClick = { selectedSymptoms = if (symptom in selectedSymptoms) selectedSymptoms - symptom else selectedSymptoms + symptom }, label = { Text(symptom) }) } } }
-                item { Text("心情", fontWeight = FontWeight.Bold) }
+                item { Text("Ánimo", fontWeight = FontWeight.Bold) }
                 item { ChoiceRow(moodOptions, mood) { mood = if (mood == it) "" else it } }
-                item { Text("精力", fontWeight = FontWeight.Bold) }
+                item { Text("Energía", fontWeight = FontWeight.Bold) }
                 item { ChoiceRow(energyOptions, energy) { energy = if (energy == it) "" else it } }
-                item { OutlinedTextField(note, { note = it }, modifier = Modifier.fillMaxWidth(), minLines = 3, label = { Text("今天还想记一点什么") }, shape = RoundedCornerShape(18.dp)) }
+                item { OutlinedTextField(note, { note = it }, modifier = Modifier.fillMaxWidth(), minLines = 3, label = { Text("Algo más que quieras registrar hoy") }, shape = RoundedCornerShape(18.dp)) }
             }
         },
-        confirmButton = { FilledTonalButton(onClick = { onSave(DailyBodyLog(date, flow, selectedSymptoms, mood, energy, note.trim())) }) { Text("保存今天") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("取消") } },
+        confirmButton = { FilledTonalButton(onClick = { onSave(DailyBodyLog(date, flow, selectedSymptoms, mood, energy, note.trim())) }) { Text("Guardar hoy") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancelar") } },
     )
 }
 
@@ -418,19 +418,19 @@ private fun HealthSettingsDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         shape = RoundedCornerShape(28.dp),
-        title = { Text("周期设置") },
+        title = { Text("Ajustes del ciclo") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                Text("历史记录不足时，先按约 30 天周期、7 天经期预测；记录多起来后会自动按你的实际节奏调整。", color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text("初始预测周期：$cycle 天"); Slider(cycle.toFloat(), { cycle = it.toInt() }, valueRange = 20f..45f, steps = 24)
-                Text("初始预测经期：$period 天"); Slider(period.toFloat(), { period = it.toInt() }, valueRange = 2f..10f, steps = 7)
-                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) { Column(Modifier.weight(1f)) { Text("通知栏提醒", fontWeight = FontWeight.Bold); Text("退出橘瓣后也可以收到", style = MaterialTheme.typography.bodySmall) }; Switch(reminders, { reminders = it }) }
-                if (reminders) { Text("提前 $days 天提醒"); Slider(days.toFloat(), { days = it.toInt() }, valueRange = 1f..7f, steps = 5) }
-                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) { Column(Modifier.weight(1f)) { Text("允许 AI 读取", fontWeight = FontWeight.Bold); Text("只提供当前状态与最近记录", style = MaterialTheme.typography.bodySmall) }; Switch(ai, { ai = it }) }
+                Text("Mientras haya pocos datos, se estimará con un ciclo aproximado de 30 días y 7 días de periodo; con más registros se ajustará a tu ritmo real.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("Ciclo inicial previsto: $cycle 天"); Slider(cycle.toFloat(), { cycle = it.toInt() }, valueRange = 20f..45f, steps = 24)
+                Text("Duración inicial prevista: $period 天"); Slider(period.toFloat(), { period = it.toInt() }, valueRange = 2f..10f, steps = 7)
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) { Column(Modifier.weight(1f)) { Text("Recordatorio por notificación", fontWeight = FontWeight.Bold); Text("También se puede recibir al salir de la app", style = MaterialTheme.typography.bodySmall) }; Switch(reminders, { reminders = it }) }
+                if (reminders) { Text("Avisar $days días antes"); Slider(days.toFloat(), { days = it.toInt() }, valueRange = 1f..7f, steps = 5) }
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) { Column(Modifier.weight(1f)) { Text("Permitir lectura a la IA", fontWeight = FontWeight.Bold); Text("Sólo comparte el estado actual y registros recientes", style = MaterialTheme.typography.bodySmall) }; Switch(ai, { ai = it }) }
             }
         },
-        confirmButton = { FilledTonalButton(onClick = { onSave(cycle, period, reminders, days, ai) }) { Text("保存") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("取消") } },
+        confirmButton = { FilledTonalButton(onClick = { onSave(cycle, period, reminders, days, ai) }) { Text("Guardar") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancelar") } },
     )
 }
 
@@ -503,9 +503,9 @@ class PeriodReminderWorker(appContext: Context, params: WorkerParameters) : Work
         if (Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) return Result.success()
 
         val manager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) manager.createNotificationChannel(NotificationChannel(PERIOD_CHANNEL_ID, "周期提醒", NotificationManager.IMPORTANCE_DEFAULT).apply { description = "经期预测与周期提醒" })
-        val text = if (days == 0) "按记录估算，今天可能接近经期开始日。记得按实际情况记录哦。" else "按记录估算，大约还有 $days 天可能进入经期。要不要提前准备一下？"
-        val notification = NotificationCompat.Builder(applicationContext, PERIOD_CHANNEL_ID).setSmallIcon(android.R.drawable.ic_dialog_info).setContentTitle("🌷 周期小提醒").setContentText(text).setStyle(NotificationCompat.BigTextStyle().bigText(text)).setAutoCancel(true).build()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) manager.createNotificationChannel(NotificationChannel(PERIOD_CHANNEL_ID, "Recordatorio del ciclo", NotificationManager.IMPORTANCE_DEFAULT).apply { description = "Predicción y recordatorio del ciclo" })
+        val text = if (days == 0) "Según los registros, hoy podría estar cerca del inicio del periodo. Registra la fecha real cuando corresponda." else "Según los registros, faltan aproximadamente $days días para el posible inicio del periodo. ¿Quieres prepararte con anticipación?"
+        val notification = NotificationCompat.Builder(applicationContext, PERIOD_CHANNEL_ID).setSmallIcon(android.R.drawable.ic_dialog_info).setContentTitle("🌷 Recordatorio del ciclo").setContentText(text).setStyle(NotificationCompat.BigTextStyle().bigText(text)).setAutoCancel(true).build()
         NotificationManagerCompat.from(applicationContext).notify(46321, notification)
         prefs.edit().putString(LAST_NOTIFICATION_KEY, marker).apply()
         return Result.success()
