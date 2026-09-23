@@ -550,7 +550,7 @@ fun CoupleDiaryPage(vm: CoupleVM = koinViewModel()) {
         folderMatch && queryMatch && modeMatch
     }
     val timelineGroups = remember(filteredEntries) {
-        val formatter = SimpleDateFormat("yyyy年MM月", Locale.getDefault())
+        val formatter = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
         filteredEntries.groupBy { formatter.format(Date(it.entryDate)) }
     }
     val bookmarkedCount = entries.count { it.bookmarked }
