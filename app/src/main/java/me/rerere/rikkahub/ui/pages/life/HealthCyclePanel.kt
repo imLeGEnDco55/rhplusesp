@@ -162,8 +162,8 @@ fun HealthCyclePanel() {
                         FilledTonalButton(onClick = { showSettings = true }, shape = RoundedCornerShape(16.dp)) { Text("Ajustes") }
                     }
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        HealthStat(if (learnedCycle != null) "Ciclo promedio" else "Ciclo previsto", "${effectiveCycle}天", Modifier.weight(1f))
-                        HealthStat(if (learnedPeriod != null) "Duración promedio" else "Duración prevista", "${effectivePeriod}天", Modifier.weight(1f))
+                        HealthStat(if (learnedCycle != null) "Ciclo promedio" else "Ciclo previsto", "${effectiveCycle} días", Modifier.weight(1f))
+                        HealthStat(if (learnedPeriod != null) "Duración promedio" else "Duración prevista", "${effectivePeriod} días", Modifier.weight(1f))
                         HealthStat("Registros", "${periods.size} veces", Modifier.weight(1f))
                     }
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -215,7 +215,7 @@ fun HealthCyclePanel() {
             ) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                        Text("${month.year}年 ${month.monthValue}月", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
+                        Text("${month.monthValue}/${month.year}", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
                         TextButton(onClick = { month = month.minusMonths(1) }) { Text("‹") }
                         TextButton(onClick = { month = YearMonth.now(); selectedDate = today }) { Text("Hoy") }
                         TextButton(onClick = { month = month.plusMonths(1) }) { Text("›") }
@@ -236,7 +236,7 @@ fun HealthCyclePanel() {
                 Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
-                            Text(selectedDate.format(DateTimeFormatter.ofPattern("M月dDom EEE")), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                            Text(selectedDate.format(DateTimeFormatter.ofPattern("d MMM EEE")), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                             Text(if (log == null) "Aún no hay registro corporal para este día" else "Estado corporal de hoy registrado", color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         FilledTonalButton(onClick = { showLogEditor = true }, shape = RoundedCornerShape(16.dp)) { Text(if (log == null) "Registros" else "Editar") }
@@ -376,7 +376,7 @@ private fun BodyLogDialog(date: LocalDate, initial: DailyBodyLog?, onDismiss: ()
     AlertDialog(
         onDismissRequest = onDismiss,
         shape = RoundedCornerShape(28.dp),
-        title = { Text("🌷 ${date.monthValue}月${date.dayOfMonth}Dom") },
+        title = { Text("🌷 ${date.dayOfMonth}/${date.monthValue}") },
         text = {
             LazyColumn(Modifier.heightIn(max = 560.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 item { Text("Flujo", fontWeight = FontWeight.Bold) }
@@ -422,8 +422,8 @@ private fun HealthSettingsDialog(
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 Text("Mientras haya pocos datos, se estimará con un ciclo aproximado de 30 días y 7 días de periodo; con más registros se ajustará a tu ritmo real.", color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text("Ciclo inicial previsto: $cycle 天"); Slider(cycle.toFloat(), { cycle = it.toInt() }, valueRange = 20f..45f, steps = 24)
-                Text("Duración inicial prevista: $period 天"); Slider(period.toFloat(), { period = it.toInt() }, valueRange = 2f..10f, steps = 7)
+                Text("Ciclo inicial previsto: $cycle días"); Slider(cycle.toFloat(), { cycle = it.toInt() }, valueRange = 20f..45f, steps = 24)
+                Text("Duración inicial prevista: $period días"); Slider(period.toFloat(), { period = it.toInt() }, valueRange = 2f..10f, steps = 7)
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) { Column(Modifier.weight(1f)) { Text("Recordatorio por notificación", fontWeight = FontWeight.Bold); Text("También se puede recibir al salir de la app", style = MaterialTheme.typography.bodySmall) }; Switch(reminders, { reminders = it }) }
                 if (reminders) { Text("Avisar $days días antes"); Slider(days.toFloat(), { days = it.toInt() }, valueRange = 1f..7f, steps = 5) }
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) { Column(Modifier.weight(1f)) { Text("Permitir lectura a la IA", fontWeight = FontWeight.Bold); Text("Sólo comparte el estado actual y registros recientes", style = MaterialTheme.typography.bodySmall) }; Switch(ai, { ai = it }) }
