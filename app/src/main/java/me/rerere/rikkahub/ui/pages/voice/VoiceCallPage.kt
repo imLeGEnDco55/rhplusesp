@@ -222,7 +222,7 @@ fun VoiceCallPage(
             )
 
             Text(
-                "语音通话中",
+                "Llamada de voz",
                 color = Color.White.copy(alpha = .58f),
                 fontSize = 13.sp,
                 modifier = Modifier.padding(top = 5.dp),
@@ -268,7 +268,7 @@ fun VoiceCallPage(
             }
             val subtitleAuthor = when (uiState.status) {
                 VoiceCallStatus.Listening,
-                VoiceCallStatus.Processing -> "你"
+                VoiceCallStatus.Processing -> "Tú"
                 else -> displayName
             }
 
@@ -288,11 +288,11 @@ fun VoiceCallPage(
                 } else {
                     Text(
                         when (uiState.status) {
-                            VoiceCallStatus.Listening -> "我在听。"
-                            VoiceCallStatus.Processing -> "TA 正在想怎么回答你…"
-                            VoiceCallStatus.Speaking -> "TA 正在说话…"
-                            VoiceCallStatus.Error -> "通话出现了问题"
-                            VoiceCallStatus.Idle -> "正在连接语音…"
+                            VoiceCallStatus.Listening -> "Te escucho."
+                            VoiceCallStatus.Processing -> "TA Pensando怎么回答Tú…"
+                            VoiceCallStatus.Speaking -> "Está hablando…"
+                            VoiceCallStatus.Error -> "Hubo un problema con la llamada"
+                            VoiceCallStatus.Idle -> "Conectando audio…"
                         },
                         color = Color.White.copy(alpha = .40f),
                         fontSize = 14.sp,
@@ -320,21 +320,21 @@ fun VoiceCallPage(
             ) {
                 LabeledControlButton(
                     icon = if (uiState.isMuted) HugeIcons.MicOff01 else HugeIcons.Mic01,
-                    label = if (uiState.isMuted) "取消静音" else "静音",
+                    label = if (uiState.isMuted) "Activar micrófono" else "Silenciar",
                     selected = uiState.isMuted,
                     enabled = boundService != null,
                 ) { boundService?.toggleMute() }
 
                 LabeledControlButton(
                     icon = HugeIcons.VolumeHigh,
-                    label = if (uiState.isSpeakerEnabled) "扬声器" else "听筒",
+                    label = if (uiState.isSpeakerEnabled) "Altavoz" else "Auricular",
                     selected = uiState.isSpeakerEnabled,
                     enabled = boundService != null,
                 ) { boundService?.toggleSpeaker() }
 
                 LabeledControlButton(
                     icon = HugeIcons.Cancel01,
-                    label = "挂断",
+                    label = "Colgar",
                     destructive = true,
                     enabled = true,
                 ) {
@@ -357,14 +357,14 @@ private fun VoiceCallBlockedPage(onBack: () -> Unit) {
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("当前已有其他通话", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.SemiBold)
+            Text("Ya hay otra llamada en curso", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.SemiBold)
             Text(
-                "请先结束正在进行的语音或视频通话，再开始新的语音电话。",
+                "Termina la llamada de voz o video actual antes de iniciar otra.",
                 color = Color.White.copy(alpha = .62f),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(top = 12.dp, bottom = 20.dp),
             )
-            Button(onClick = onBack) { Text("返回") }
+            Button(onClick = onBack) { Text("Volver") }
         }
     }
 }
@@ -499,9 +499,9 @@ private fun ControlButton(
 }
 
 private fun statusText(status: VoiceCallStatus): String = when (status) {
-    VoiceCallStatus.Idle -> "连接中"
-    VoiceCallStatus.Listening -> "正在听你说"
-    VoiceCallStatus.Processing -> "正在想"
-    VoiceCallStatus.Speaking -> "正在说话"
-    VoiceCallStatus.Error -> "通话异常"
+    VoiceCallStatus.Idle -> "Conectando"
+    VoiceCallStatus.Listening -> "正在听Tú说"
+    VoiceCallStatus.Processing -> "Pensando"
+    VoiceCallStatus.Speaking -> "Hablando"
+    VoiceCallStatus.Error -> "Error de llamada"
 }
