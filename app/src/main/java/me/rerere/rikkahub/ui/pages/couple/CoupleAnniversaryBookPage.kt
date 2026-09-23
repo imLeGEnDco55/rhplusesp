@@ -32,11 +32,11 @@ private data class AnniversaryCategory(
 )
 
 private val anniversaryCategories = listOf(
-    AnniversaryCategory("love", "恋爱", "♡", Color(0xFFFFEEF3), Color(0xFFC65D79)),
-    AnniversaryCategory("birthday", "生日", "🎂", Color(0xFFFFF3DF), Color(0xFFB87A27)),
-    AnniversaryCategory("travel", "旅行", "✈", Color(0xFFEAF5FA), Color(0xFF4D829C)),
-    AnniversaryCategory("promise", "约定", "✦", Color(0xFFF1ECFA), Color(0xFF7E66A3)),
-    AnniversaryCategory("memory", "纪念", "❦", Color(0xFFEDF4EA), Color(0xFF657E5D)),
+    AnniversaryCategory("love", "Relación", "♡", Color(0xFFFFEEF3), Color(0xFFC65D79)),
+    AnniversaryCategory("birthday", "Cumpleaños", "🎂", Color(0xFFFFF3DF), Color(0xFFB87A27)),
+    AnniversaryCategory("travel", "Viaje", "✈", Color(0xFFEAF5FA), Color(0xFF4D829C)),
+    AnniversaryCategory("promise", "Promesa", "✦", Color(0xFFF1ECFA), Color(0xFF7E66A3)),
+    AnniversaryCategory("memory", "Aniversario", "❦", Color(0xFFEDF4EA), Color(0xFF657E5D)),
 )
 
 private fun categoryFor(id: String): AnniversaryCategory =
@@ -51,7 +51,7 @@ fun CoupleAnniversaryBookPage(vm: CoupleVM = koinViewModel()) {
     val settings by vm.settings.collectAsStateWithLifecycle()
     val partner = settings.assistants.firstOrNull { it.id.toString() == relationship?.assistantId }
     val partnerName = partner?.name?.ifBlank { "TA" } ?: "TA"
-    val userName = settings.displaySetting.userNickname.ifBlank { "我" }
+    val userName = settings.displaySetting.userNickname.ifBlank { "Yo" }
 
     var filter by remember { mutableStateOf(AnniversaryFilter.ALL) }
     var showEditor by remember { mutableStateOf(false) }
@@ -69,7 +69,7 @@ fun CoupleAnniversaryBookPage(vm: CoupleVM = koinViewModel()) {
     }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("纪念册") }, navigationIcon = { BackButton() }) },
+        topBar = { TopAppBar(title = { Text("Álbum de aniversarios") }, navigationIcon = { BackButton() }) },
         floatingActionButton = { FloatingActionButton(onClick = { showEditor = true }) { Text("＋") } },
     ) { padding ->
         LazyColumn(
@@ -91,18 +91,18 @@ fun CoupleAnniversaryBookPage(vm: CoupleVM = koinViewModel()) {
                     contentPadding = PaddingValues(horizontal = 14.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    item { FilterChip(selected = filter == AnniversaryFilter.ALL, onClick = { filter = AnniversaryFilter.ALL }, label = { Text("全部 ${entries.size}") }) }
-                    item { FilterChip(selected = filter == AnniversaryFilter.UPCOMING, onClick = { filter = AnniversaryFilter.UPCOMING }, label = { Text("30天内") }) }
-                    item { FilterChip(selected = filter == AnniversaryFilter.FAVORITE, onClick = { filter = AnniversaryFilter.FAVORITE }, label = { Text("珍藏 ${entries.count { it.favorite }}") }) }
+                    item { FilterChip(selected = filter == AnniversaryFilter.ALL, onClick = { filter = AnniversaryFilter.ALL }, label = { Text("Todos ${entries.size}") }) }
+                    item { FilterChip(selected = filter == AnniversaryFilter.UPCOMING, onClick = { filter = AnniversaryFilter.UPCOMING }, label = { Text("Próximos 30 días") }) }
+                    item { FilterChip(selected = filter == AnniversaryFilter.FAVORITE, onClick = { filter = AnniversaryFilter.FAVORITE }, label = { Text("Favoritos ${entries.count { it.favorite }}") }) }
                 }
             }
             if (visible.isEmpty()) {
                 item {
                     Text(
                         when (filter) {
-                            AnniversaryFilter.ALL -> "还没有纪念日。把第一个重要日子收藏进来吧。"
-                            AnniversaryFilter.FAVORITE -> "还没有珍藏的纪念日。"
-                            AnniversaryFilter.UPCOMING -> "未来 30 天没有即将到来的纪念日。"
+                            AnniversaryFilter.ALL -> "Aún no hay aniversarios. Guarda el primer día importante."
+                            AnniversaryFilter.FAVORITE -> "Aún no hay aniversarios guardados como favoritos."
+                            AnniversaryFilter.UPCOMING -> "No hay aniversarios próximos en los siguientes 30 días."
                         },
                         modifier = Modifier.padding(24.dp),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -186,18 +186,18 @@ private fun AnniversaryHero(
     ) {
         Column(Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Text("❦  OUR ANNIVERSARY BOOK", color = Color(0xFFE8B9C5), style = MaterialTheme.typography.labelLarge)
-            Text("值得记住的日子", color = Color(0xFFFFF7F8), style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+            Text("Días que vale la pena recordar", color = Color(0xFFFFF7F8), style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
             Text("$userName × $partnerName", color = Color(0xFFFFF7F8).copy(alpha = 0.86f), style = MaterialTheme.typography.titleMedium)
             HorizontalDivider(color = Color(0xFFE8B9C5).copy(alpha = 0.25f))
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Column {
-                    Text(daysTogether?.let { "相伴第 $it 天" } ?: "属于你们的纪念册", color = Color.White)
-                    Text("已经收藏 $entryCount 个日子", color = Color.White.copy(alpha = 0.66f), style = MaterialTheme.typography.bodySmall)
+                    Text(daysTogether?.let { "Día $it juntos" } ?: "Su álbum de aniversarios", color = Color.White)
+                    Text("Ya guardaron $entryCount días", color = Color.White.copy(alpha = 0.66f), style = MaterialTheme.typography.bodySmall)
                 }
                 nextEntry?.let {
                     val days = daysUntil(it, System.currentTimeMillis())
                     Column(horizontalAlignment = Alignment.End) {
-                        Text(if (days == 0L) "就是今天 ♡" else "还有 $days 天", color = Color(0xFFFFD8E2), fontWeight = FontWeight.Bold)
+                        Text(if (days == 0L) "Es hoy ♡" else "Faltan $days juntos", color = Color(0xFFFFD8E2), fontWeight = FontWeight.Bold)
                         Text(it.title, color = Color.White.copy(alpha = 0.74f), style = MaterialTheme.typography.bodySmall)
                     }
                 }
@@ -228,13 +228,13 @@ private fun AnniversaryCard(
             }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(entry.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-                Text("${category.label} · ${formatAnniversaryDate(entry.eventDate)}${if (entry.yearly) " · 每年" else ""}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("${category.label} · ${formatAnniversaryDate(entry.eventDate)}${if (entry.yearly) " · cada año" else ""}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 entry.note?.takeIf { it.isNotBlank() }?.let {
                     Text(it.replace("\n", " ").take(70) + if (it.length > 70) "…" else "", style = MaterialTheme.typography.bodySmall)
                 }
             }
             Column(horizontalAlignment = Alignment.End) {
-                Text(if (days == 0L) "今天" else if (days > 0) "$days 天" else "已过去", color = category.accent, fontWeight = FontWeight.Bold)
+                Text(if (days == 0L) "Hoy" else if (days > 0) "$days juntos" else "Ya pasó", color = category.accent, fontWeight = FontWeight.Bold)
                 TextButton(onClick = onFavorite, colors = ButtonDefaults.textButtonColors(contentColor = category.accent)) {
                     Text(if (entry.favorite) "♥" else "♡")
                 }
@@ -258,35 +258,35 @@ private fun AnniversaryEditorDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (initial == null) "收藏一个重要日子" else "编辑纪念日") },
+        title = { Text(if (initial == null) "Guardar un día importante" else "Editar aniversario") },
         text = {
             Column(Modifier.heightIn(max = 540.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                OutlinedTextField(title, { title = it }, modifier = Modifier.fillMaxWidth(), label = { Text("这一天叫什么？") }, singleLine = true)
-                Text("类型", style = MaterialTheme.typography.labelLarge)
+                OutlinedTextField(title, { title = it }, modifier = Modifier.fillMaxWidth(), label = { Text("¿Cómo se llama este día?") }, singleLine = true)
+                Text("Tipo", style = MaterialTheme.typography.labelLarge)
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     items(anniversaryCategories) { item ->
                         FilterChip(selected = category == item.id, onClick = { category = item.id }, label = { Text("${item.emoji} ${item.label}") })
                     }
                 }
                 OutlinedButton(onClick = { showDatePicker = true }, modifier = Modifier.fillMaxWidth()) {
-                    Text("日期 · ${formatAnniversaryDate(date)}")
+                    Text("Fecha · ${formatAnniversaryDate(date)}")
                 }
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        Text("每年纪念")
-                        Text("生日、恋爱纪念日等会自动计算下一次", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("Repetir cada año")
+                        Text("Cumpleaños, aniversarios de relación, etc. calcularán automáticamente la siguiente fecha", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Switch(checked = yearly, onCheckedChange = { yearly = it })
                 }
-                OutlinedTextField(note, { note = it }, modifier = Modifier.fillMaxWidth(), label = { Text("这一天的小故事 / 备注") }, minLines = 4)
+                OutlinedTextField(note, { note = it }, modifier = Modifier.fillMaxWidth(), label = { Text("Historia o nota sobre este día") }, minLines = 4)
             }
         },
         confirmButton = {
             TextButton(enabled = title.isNotBlank(), onClick = { onSave(title.trim(), date, yearly, category, note.trim().takeIf { it.isNotBlank() }) }) {
-                Text(if (initial == null) "收藏这一天" else "保存修改")
+                Text(if (initial == null) "Guardar este día" else "Guardar cambios")
             }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("取消") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancelar") } },
     )
 
     if (showDatePicker) {
@@ -297,9 +297,9 @@ private fun AnniversaryEditorDialog(
                 TextButton(onClick = {
                     date = state.selectedDateMillis ?: date
                     showDatePicker = false
-                }) { Text("确定") }
+                }) { Text("Aceptar") }
             },
-            dismissButton = { TextButton(onClick = { showDatePicker = false }) { Text("取消") } },
+            dismissButton = { TextButton(onClick = { showDatePicker = false }) { Text("Cancelar") } },
         ) { DatePicker(state = state, showModeToggle = false) }
     }
 }
@@ -327,27 +327,27 @@ private fun AnniversaryDetailDialog(
                         Text(formatAnniversaryDate(entry.eventDate), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
                         Text(
                             when {
-                                days == 0L -> "今天就是这一天 ♡"
-                                days > 0L -> "距离下一次还有 $days 天"
-                                else -> "这是一个已经发生、值得留下来的日子"
+                                days == 0L -> "Hoy es ese día ♡"
+                                days > 0L -> "Faltan $days juntos"
+                                else -> "Es un día que ya ocurrió y vale la pena conservar"
                             },
                             color = category.accent,
                         )
-                        if (entry.yearly) Text("每年都会重新来到你和 $partnerName 身边。", style = MaterialTheme.typography.bodySmall)
+                        if (entry.yearly) Text("Cada año volverá para ti y $partnerName.", style = MaterialTheme.typography.bodySmall)
                     }
                 }
                 entry.note?.let {
-                    Text("关于这一天", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+                    Text("Sobre este día", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
                     Text(it)
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onEdit) { Text("编辑") } },
+        confirmButton = { TextButton(onClick = onEdit) { Text("Editar") } },
         dismissButton = {
             Row {
-                TextButton(onClick = onFavorite) { Text(if (entry.favorite) "取消珍藏" else "♡ 珍藏") }
-                TextButton(onClick = onDelete) { Text("删除") }
-                TextButton(onClick = onDismiss) { Text("关闭") }
+                TextButton(onClick = onFavorite) { Text(if (entry.favorite) "Quitar de favoritos" else "♡ Favorito") }
+                TextButton(onClick = onDelete) { Text("Eliminar") }
+                TextButton(onClick = onDismiss) { Text("Cerrar") }
             }
         },
     )
