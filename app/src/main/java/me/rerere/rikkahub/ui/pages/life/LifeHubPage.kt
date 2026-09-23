@@ -30,12 +30,12 @@ import java.util.Date
 import java.util.concurrent.TimeUnit
 
 private enum class LifeSection(val title: String, val emoji: String, val hint: String) {
-    HOME("今日", "🏡", "今天的状态、安排与共同生活"),
-    STATUS("周期与身体", "🌸", "记录经期、周期、身体状态、心情与精力"),
-    MEMO("备忘录", "📝", "把想法、待办和两个人的小计划好好收起来"),
-    CALENDAR("日历提醒", "📅", "把计划和纪念日加入系统日历"),
-    MUSIC("一起听", "🎵", "导入歌曲、一起听歌并留下共同音乐记忆"),
-    READING("共读书架", "📖", "记录书籍、进度、书签和共同想法"),
+    HOME("Hoy", "🏡", "Estado de hoy, planes y vida compartida"),
+    STATUS("Ciclo y cuerpo", "🌸", "Registra menstruación, ciclo, estado físico, ánimo y energía"),
+    MEMO("Notas", "📝", "Guarda ideas, pendientes y pequeños planes compartidos"),
+    CALENDAR("Recordatorios del calendario", "📅", "Añade planes y aniversarios al calendario del sistema"),
+    MUSIC("Escuchar juntos", "🎵", "Importa canciones, escúchenlas juntos y conserva recuerdos musicales"),
+    READING("Biblioteca compartida", "📖", "Registra libros, progreso, marcadores e ideas compartidas"),
 }
 
 private data class LifeEntry(
@@ -61,11 +61,11 @@ private data class MemoCategory(
 )
 
 private val memoCategories = listOf(
-    MemoCategory("life", "生活", "🏡", Color(0xFFFFF8EE), Color(0xFFB98653), Color(0xFFFFEBD4)),
-    MemoCategory("todo", "待办", "⏰", Color(0xFFFFF0E6), Color(0xFFC77B52), Color(0xFFFFDFC9)),
-    MemoCategory("idea", "灵感", "💡", Color(0xFFF4EFFB), Color(0xFF8066A5), Color(0xFFE8DCF8)),
-    MemoCategory("together", "我们的", "💕", Color(0xFFFFEEF4), Color(0xFFC16683), Color(0xFFFFD8E5)),
-    MemoCategory("ai", "TA 的", "🐰", Color(0xFFEDF5FC), Color(0xFF6286A3), Color(0xFFDCECF8)),
+    MemoCategory("life", "Vida", "🏡", Color(0xFFFFF8EE), Color(0xFFB98653), Color(0xFFFFEBD4)),
+    MemoCategory("todo", "Pendientes", "⏰", Color(0xFFFFF0E6), Color(0xFFC77B52), Color(0xFFFFDFC9)),
+    MemoCategory("idea", "Ideas", "💡", Color(0xFFF4EFFB), Color(0xFF8066A5), Color(0xFFE8DCF8)),
+    MemoCategory("together", "Nuestro", "💕", Color(0xFFFFEEF4), Color(0xFFC16683), Color(0xFFFFD8E5)),
+    MemoCategory("ai", "Suyo", "🐰", Color(0xFFEDF5FC), Color(0xFF6286A3), Color(0xFFDCECF8)),
 )
 
 private fun memoCategory(id: String): MemoCategory =
@@ -89,17 +89,17 @@ fun LifeHubPage() {
 
     val bookImporter = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
         if (uri != null) {
-            val name = uri.lastPathSegment?.substringAfterLast('/') ?: "导入的小说"
+            val name = uri.lastPathSegment?.substringAfterLast('/') ?: "Novela importada"
             val preview = runCatching {
                 context.contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText().take(800) }
             }.getOrNull().orEmpty()
-            saveAll(entries + LifeEntry(section = LifeSection.READING, title = name, detail = preview, tag = "刚刚导入"))
+            saveAll(entries + LifeEntry(section = LifeSection.READING, title = name, detail = preview, tag = "Recién importada"))
             section = LifeSection.READING
         }
     }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("生活空间") }, navigationIcon = { BackButton() }) },
+        topBar = { TopAppBar(title = { Text("Espacio de vida") }, navigationIcon = { BackButton() }) },
         floatingActionButton = {
             if (section != LifeSection.HOME &&
                 section != LifeSection.STATUS &&
@@ -159,7 +159,7 @@ fun LifeHubPage() {
                     }
                     if (section == LifeSection.READING) item {
                         TextButton(onClick = { bookImporter.launch(arrayOf("text/plain", "text/*")) }) {
-                            Text("＋ 导入 TXT 小说")
+                            Text("＋ Importar novela TXT")
                         }
                     }
                     if (section == LifeSection.HOME) {
@@ -173,7 +173,7 @@ fun LifeHubPage() {
                             }
                         }
                     } else if (filtered.isEmpty()) item {
-                        Text("这里还没有记录，点击右下角开始。", modifier = Modifier.padding(8.dp))
+                        Text("Aún no hay registros. Toca abajo a la derecha para empezar.", modifier = Modifier.padding(8.dp))
                     }
                     if (section != LifeSection.HOME) items(filtered, key = { it.id }) { entry ->
                         Card(Modifier.fillMaxWidth()) {
@@ -183,7 +183,7 @@ fun LifeHubPage() {
                                     if (entry.tag.isNotBlank()) Text(entry.tag, color = MaterialTheme.colorScheme.primary)
                                 }
                                 if (entry.detail.isNotBlank()) Text(entry.detail)
-                                TextButton(onClick = { saveAll(entries.filterNot { it.id == entry.id }) }) { Text("删除") }
+                                TextButton(onClick = { saveAll(entries.filterNot { it.id == entry.id }) }) { Text("Eliminar") }
                             }
                         }
                     }
@@ -300,16 +300,16 @@ private fun MemoBoard(
                 onValueChange = { query = it },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
-                placeholder = { Text("🔎 搜索一张小便签……") },
+                placeholder = { Text("🔎 Buscar una nota…") },
                 singleLine = true,
             )
         }
         item {
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                item { MemoFilterChip("全部 ${entries.size}", filter == MemoFilter.ALL) { filter = MemoFilter.ALL } }
-                item { MemoFilterChip("📌 置顶", filter == MemoFilter.PINNED) { filter = MemoFilter.PINNED } }
-                item { MemoFilterChip("☐ 待办", filter == MemoFilter.TODO) { filter = MemoFilter.TODO } }
-                item { MemoFilterChip("✓ 完成", filter == MemoFilter.DONE) { filter = MemoFilter.DONE } }
+                item { MemoFilterChip("Todas ${entries.size}", filter == MemoFilter.ALL) { filter = MemoFilter.ALL } }
+                item { MemoFilterChip("📌 Fijadas", filter == MemoFilter.PINNED) { filter = MemoFilter.PINNED } }
+                item { MemoFilterChip("☐ Pendientes", filter == MemoFilter.TODO) { filter = MemoFilter.TODO } }
+                item { MemoFilterChip("✓ Completadas", filter == MemoFilter.DONE) { filter = MemoFilter.DONE } }
             }
         }
         item {
@@ -318,7 +318,7 @@ private fun MemoBoard(
                     FilterChip(
                         selected = categoryFilter == null,
                         onClick = { categoryFilter = null },
-                        label = { Text("🎀 所有分类") },
+                        label = { Text("🎀 Todas las categorías") },
                         shape = RoundedCornerShape(18.dp),
                     )
                 }
@@ -375,8 +375,8 @@ private fun MemoBoardHeader(
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.Top) {
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text("୨୧  LIFE MEMO", color = Color(0xFFB45E7A), style = MaterialTheme.typography.labelLarge)
-                    Text("生活备忘板", color = Color(0xFF5A4650), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-                    Text("把想记住的事情贴在这里。", color = Color(0xFF8A737D), style = MaterialTheme.typography.bodyMedium)
+                    Text("Tablero de notas", color = Color(0xFF5A4650), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+                    Text("Guarda aquí las cosas que quieras recordar.", color = Color(0xFF8A737D), style = MaterialTheme.typography.bodyMedium)
                 }
                 Surface(shape = CircleShape, color = Color(0xFFFFDFE9)) {
                     Box(Modifier.size(46.dp), contentAlignment = Alignment.Center) {
@@ -386,9 +386,9 @@ private fun MemoBoardHeader(
             }
 
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                MemoStatPill("☁", "待处理", todoCount, Color(0xFFFFE4D8), Color(0xFFB96F54), Modifier.weight(1f))
-                MemoStatPill("✓", "完成啦", doneCount, Color(0xFFE4F1E8), Color(0xFF5E826B), Modifier.weight(1f))
-                MemoStatPill("📌", "置顶", pinnedCount, Color(0xFFE9E4F7), Color(0xFF79649C), Modifier.weight(1f))
+                MemoStatPill("☁", "Pendiente", todoCount, Color(0xFFFFE4D8), Color(0xFFB96F54), Modifier.weight(1f))
+                MemoStatPill("✓", "Completado", doneCount, Color(0xFFE4F1E8), Color(0xFF5E826B), Modifier.weight(1f))
+                MemoStatPill("📌", "Fijado", pinnedCount, Color(0xFFE9E4F7), Color(0xFF79649C), Modifier.weight(1f))
             }
 
             FilledTonalButton(
@@ -400,7 +400,7 @@ private fun MemoBoardHeader(
                     contentColor = Color(0xFF9F4F6A),
                 ),
             ) {
-                Text("＋ 写一张小便签")
+                Text("＋ Escribir una nota")
             }
         }
     }
@@ -452,18 +452,18 @@ private fun MemoEmptyState(completelyEmpty: Boolean, onAdd: () -> Unit) {
         ) {
             Text(if (completelyEmpty) "🎀📝" else "☁️", style = MaterialTheme.typography.headlineMedium)
             Text(
-                if (completelyEmpty) "这里还没有小便签哦" else "没有找到这张小便签",
+                if (completelyEmpty) "Aún no hay notas" else "No se encontró esta nota",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = Color(0xFF64535A),
             )
             Text(
-                if (completelyEmpty) "把想记住的事情贴上来吧。" else "换个关键词或筛选条件试试看～",
+                if (completelyEmpty) "Añade aquí algo que quieras recordar." else "Prueba con otra palabra clave o filtro.",
                 color = Color(0xFF8C7A82),
                 style = MaterialTheme.typography.bodyMedium,
             )
             if (completelyEmpty) {
-                TextButton(onClick = onAdd) { Text("贴第一张便签 ♡") }
+                TextButton(onClick = onAdd) { Text("Añadir la primera nota ♡") }
             }
         }
     }
@@ -507,7 +507,7 @@ private fun MemoCard(
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
                     Row(horizontalArrangement = Arrangement.spacedBy(7.dp), verticalAlignment = Alignment.CenterVertically) {
                         Text(category.label, style = MaterialTheme.typography.labelMedium, color = category.accent)
-                        if (entry.pinned) Text("📌 置顶", style = MaterialTheme.typography.labelSmall, color = category.accent)
+                        if (entry.pinned) Text("📌 Fijadas", style = MaterialTheme.typography.labelSmall, color = category.accent)
                     }
                     Text(
                         entry.title,
@@ -537,7 +537,7 @@ private fun MemoCard(
             Row(horizontalArrangement = Arrangement.spacedBy(7.dp), verticalAlignment = Alignment.CenterVertically) {
                 Surface(shape = RoundedCornerShape(12.dp), color = category.soft.copy(alpha = 0.78f)) {
                     Text(
-                        "贴于 ${formatMemoDate(entry.createdAt)}",
+                        "Creada el ${formatMemoDate(entry.createdAt)}",
                         modifier = Modifier.padding(horizontal = 9.dp, vertical = 5.dp),
                         color = category.accent,
                         style = MaterialTheme.typography.labelSmall,
@@ -558,7 +558,7 @@ private fun MemoCard(
 
             if (entry.completed) {
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    Text("完成啦 ✓", color = category.accent.copy(alpha = 0.72f), style = MaterialTheme.typography.labelMedium)
+                    Text("Completado ✓", color = category.accent.copy(alpha = 0.72f), style = MaterialTheme.typography.labelMedium)
                 }
             }
 
@@ -569,15 +569,15 @@ private fun MemoCard(
                     onClick = onToggleDone,
                     colors = ButtonDefaults.textButtonColors(contentColor = category.accent),
                 ) {
-                    Text(if (entry.completed) "↩ 恢复" else "✓ 完成")
+                    Text(if (entry.completed) "↩ Restaurar" else "✓ Completadas")
                 }
                 Spacer(Modifier.weight(1f))
                 if (entry.reminderAt != null) {
                     TextButton(onClick = onAddCalendar) { Text("📅") }
                 }
-                TextButton(onClick = onEdit) { Text("编辑") }
+                TextButton(onClick = onEdit) { Text("Editar") }
                 TextButton(onClick = onDelete, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant)) {
-                    Text("拿下")
+                    Text("Desfijar")
                 }
             }
         }
@@ -591,11 +591,11 @@ private fun memoReminderState(value: Long): MemoReminderState {
     val diff = value - now
     val day = TimeUnit.MILLISECONDS.toDays(diff)
     return when {
-        diff < -TimeUnit.DAYS.toMillis(1) -> MemoReminderState("已过提醒日", false)
-        diff <= 0L -> MemoReminderState("今天", true)
-        diff < TimeUnit.DAYS.toMillis(1) -> MemoReminderState("今天", true)
-        day == 1L -> MemoReminderState("明天", true)
-        day in 2L..3L -> MemoReminderState("还有 $day 天", true)
+        diff < -TimeUnit.DAYS.toMillis(1) -> MemoReminderState("Recordatorio vencido", false)
+        diff <= 0L -> MemoReminderState("Hoy", true)
+        diff < TimeUnit.DAYS.toMillis(1) -> MemoReminderState("Hoy", true)
+        day == 1L -> MemoReminderState("Mañana", true)
+        day in 2L..3L -> MemoReminderState("Faltan $day días", true)
         else -> MemoReminderState(formatMemoDate(value), false)
     }
 }
@@ -621,9 +621,9 @@ private fun MemoEditorDialog(
         shape = RoundedCornerShape(26.dp),
         title = {
             Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                Text(if (initial == null) "🎀 写一张小便签" else "📝 修改这张便签")
+                Text(if (initial == null) "🎀 Escribir una nota" else "📝 Editar esta nota")
                 Text(
-                    if (initial == null) "想到什么就先贴上来。" else "慢慢改，不着急。",
+                    if (initial == null) "Apunta lo que tengas en mente." else "Puedes editarla con calma.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -634,7 +634,7 @@ private fun MemoEditorDialog(
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("这张便签想记什么？") },
+                    label = { Text("¿Qué quieres recordar en esta nota?") },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(18.dp),
                     singleLine = true,
@@ -642,13 +642,13 @@ private fun MemoEditorDialog(
                 OutlinedTextField(
                     value = detail,
                     onValueChange = { detail = it },
-                    label = { Text("写下一点内容……") },
+                    label = { Text("Escribe algo…") },
                     minLines = 5,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(18.dp),
                 )
 
-                Text("放进哪个小抽屉？", style = MaterialTheme.typography.labelLarge)
+                Text("¿En qué categoría va?", style = MaterialTheme.typography.labelLarge)
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     items(memoCategories) { item ->
                         FilterChip(
@@ -673,16 +673,16 @@ private fun MemoEditorDialog(
                     Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                             Column(Modifier.weight(1f)) {
-                                Text("📌 贴到最上面", color = currentCategory.accent, fontWeight = FontWeight.SemiBold)
-                                Text("重要的小事会一直排在前面", style = MaterialTheme.typography.bodySmall, color = Color(0xFF75666D))
+                                Text("📌 Fijar arriba", color = currentCategory.accent, fontWeight = FontWeight.SemiBold)
+                                Text("Las cosas importantes quedarán siempre arriba", style = MaterialTheme.typography.bodySmall, color = Color(0xFF75666D))
                             }
                             Switch(checked = pinned, onCheckedChange = { pinned = it })
                         }
                         if (initial != null) {
                             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                                 Column(Modifier.weight(1f)) {
-                                    Text("✓ 已经完成啦", color = currentCategory.accent, fontWeight = FontWeight.SemiBold)
-                                    Text("完成后便签会轻轻淡下来", style = MaterialTheme.typography.bodySmall, color = Color(0xFF75666D))
+                                    Text("✓ Ya está completado", color = currentCategory.accent, fontWeight = FontWeight.SemiBold)
+                                    Text("Al completarla, la nota se atenuará", style = MaterialTheme.typography.bodySmall, color = Color(0xFF75666D))
                                 }
                                 Switch(checked = completed, onCheckedChange = { completed = it })
                             }
@@ -695,11 +695,11 @@ private fun MemoEditorDialog(
                         onClick = { showDatePicker = true },
                         shape = RoundedCornerShape(16.dp),
                     ) {
-                        Text(reminderAt?.let { "⏰ ${formatMemoDate(it)}" } ?: "⏰ 选择提醒日期")
+                        Text(reminderAt?.let { "⏰ ${formatMemoDate(it)}" } ?: "⏰ Elegir fecha de recordatorio")
                     }
-                    if (reminderAt != null) TextButton(onClick = { reminderAt = null }) { Text("清除") }
+                    if (reminderAt != null) TextButton(onClick = { reminderAt = null }) { Text("Borrar") }
                 }
-                Text("提醒日期会留在便签上，也可以一键放进系统日历。", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("La fecha del recordatorio quedará en la nota y podrás añadirla al calendario del sistema.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         },
         confirmButton = {
@@ -712,10 +712,10 @@ private fun MemoEditorDialog(
                     contentColor = Color(0xFF9F4F6A),
                 ),
             ) {
-                Text(if (initial == null) "收进备忘板 ♡" else "保存这张便签")
+                Text(if (initial == null) "Guardar en el tablero ♡" else "Guardar esta nota")
             }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("先不写") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Ahora no") } },
     )
 
     if (showDatePicker) {
@@ -726,9 +726,9 @@ private fun MemoEditorDialog(
                 TextButton(onClick = {
                     reminderAt = state.selectedDateMillis
                     showDatePicker = false
-                }) { Text("贴上这个日期") }
+                }) { Text("Usar esta fecha") }
             },
-            dismissButton = { TextButton(onClick = { showDatePicker = false }) { Text("取消") } },
+            dismissButton = { TextButton(onClick = { showDatePicker = false }) { Text("Cancelar") } },
         ) { DatePicker(state = state, showModeToggle = false) }
     }
 }
@@ -744,15 +744,15 @@ private fun AddLifeEntryDialog(
     var tag by remember(section) { mutableStateOf("") }
     val labels = when (section) {
         LifeSection.HOME -> Triple("", "", "")
-        LifeSection.STATUS -> Triple("今天感觉怎么样", "身体感受或想让 AI 知道的事", "心情 / 精力")
-        LifeSection.MEMO -> Triple("备忘标题", "计划或想法", "分类")
-        LifeSection.CALENDAR -> Triple("安排或提醒标题", "时间、地点和需要 AI 提醒的事情", "今天 / 本周 / 纪念日")
-        LifeSection.MUSIC -> Triple("歌曲名", "歌手、故事或一起听歌的回忆", "想念 / 开心 / 安慰")
-        LifeSection.READING -> Triple("书名或章节", "阅读进度、原文、你的批注以及想问 AI 的问题", "普通书签 / 情绪书签 / 猜想书签 / 记忆书签")
+        LifeSection.STATUS -> Triple("¿Cómo te sientes hoy?", "Sensaciones físicas o algo que quieras que la IA sepa", "Ánimo / Energía")
+        LifeSection.MEMO -> Triple("Título de la nota", "Plan o idea", "Categoría")
+        LifeSection.CALENDAR -> Triple("Título del plan o recordatorio", "Hora, lugar y lo que quieres que la IA te recuerde", "Hoy / Esta semana / Aniversario")
+        LifeSection.MUSIC -> Triple("Canción", "Artista, historia o recuerdo de escucharla juntos", "Extrañar / Alegría / Consuelo")
+        LifeSection.READING -> Triple("Libro o capítulo", "Progreso, texto original, tus notas y preguntas para la IA", "Marcador normal / emocional / de teoría / de recuerdo")
     }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("添加${section.title}") },
+        title = { Text("Añadir${section.title}") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 OutlinedTextField(title, { title = it }, label = { Text(labels.first) }, modifier = Modifier.fillMaxWidth())
@@ -760,8 +760,8 @@ private fun AddLifeEntryDialog(
                 OutlinedTextField(tag, { tag = it }, label = { Text(labels.third) }, modifier = Modifier.fillMaxWidth())
             }
         },
-        confirmButton = { TextButton(enabled = title.isNotBlank(), onClick = { onSave(title.trim(), detail.trim(), tag.trim()) }) { Text("保存") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("取消") } },
+        confirmButton = { TextButton(enabled = title.isNotBlank(), onClick = { onSave(title.trim(), detail.trim(), tag.trim()) }) { Text("Guardar") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancelar") } },
     )
 }
 
@@ -804,8 +804,8 @@ private fun loadEntries(context: Context): List<LifeEntry> = runCatching {
                     createdAt = item.optLong("createdAt", item.getLong("id")),
                     memoCategory = item.optString("memoCategory").takeIf { it.isNotBlank() }
                         ?: when (item.optString("tag")) {
-                            "AI", "TA 的" -> "ai"
-                            "我们的" -> "together"
+                            "AI", "Suyo" -> "ai"
+                            "Nuestro" -> "together"
                             else -> "life"
                         },
                     pinned = item.optBoolean("pinned", false),

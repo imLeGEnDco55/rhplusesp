@@ -1,0 +1,303 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+<string name="setting_page_web_server_stop">Detener</string>
+<string name="setting_provider_page_abilities">Capacidades</string>
+<string name="setting_provider_page_add">Añadir</string>
+<string name="setting_provider_page_add_model">Añadir modelo</string>
+<string name="setting_provider_page_add_models_hint">Pulsa el botón de abajo para añadir modelos</string>
+<string name="setting_provider_page_add_new_model">Añadir modelo nuevo</string>
+<string name="setting_provider_page_add_provider">Añadir proveedor</string>
+<string name="setting_provider_page_add_provider_override">Añadir configuración específica del proveedor</string>
+<string name="setting_provider_page_advanced_settings">Ajustes avanzados</string>
+<string name="setting_provider_page_api_base_url">URL base de API</string>
+<string name="setting_provider_page_api_key">Clave API</string>
+<string name="setting_provider_page_api_path">Ruta de API</string>
+<string name="setting_provider_page_avaliable_models">Modelos disponibles</string>
+<string name="setting_provider_page_balance_api_path">Ruta de API de saldo</string>
+<string name="setting_provider_page_balance_info">"Obtener saldo de la cuenta "</string>
+<string name="setting_provider_page_balance_json_key">Clave JSON del resultado</string>
+<string name="setting_provider_page_basic_settings">Ajustes básicos</string>
+<string name="setting_provider_page_chat_model">Chat</string>
+<string name="setting_provider_page_claude_prompt_cache_ttl">TTL de caché del prompt</string>
+<string name="setting_provider_page_claude_prompt_cache_ttl_1h">1 hora</string>
+<string name="setting_provider_page_claude_prompt_cache_ttl_5m">5 minutos</string>
+<string name="setting_provider_page_claude_prompt_caching">Caché de prompts (cache_control)</string>
+<string name="setting_provider_page_configuration">Configuración</string>
+<string name="setting_provider_page_configure_provider_override">Configurar ajustes específicos del proveedor</string>
+<string name="setting_provider_page_delete_dialog_text">¿Seguro que quieres eliminar este proveedor? Esta acción no se puede deshacer.</string>
+<string name="setting_provider_page_deselect_models">Deseleccionar todo</string>
+<string name="setting_provider_page_disabled">Desactivado</string>
+<string name="setting_provider_page_edit_model">Editar modelo</string>
+<string name="setting_provider_page_embedding_model">Embedding</string>
+<string name="setting_provider_page_enable">Activar</string>
+<string name="setting_provider_page_enabled">Activado</string>
+<string name="setting_provider_page_filter_example">p. ej.: GPT-3.5</string>
+<string name="setting_provider_page_filter_placeholder">Introduce el nombre del modelo para filtrar</string>
+<string name="setting_provider_page_image">Imagen</string>
+<string name="setting_provider_page_image_model">Imagen</string>
+<string name="setting_provider_page_image_qr_decode_failed">No se pudo analizar el código QR de la imagen: %s</string>
+<string name="setting_provider_page_import_dialog_message">Selecciona el método de importación:</string>
+<string name="setting_provider_page_import_dialog_title">Importar configuración del proveedor</string>
+<string name="setting_provider_page_import_service_account_json">Importar JSON de cuenta de servicio</string>
+<string name="setting_provider_page_import_success">Importado correctamente</string>
+<string name="setting_provider_page_input_modality">Modalidad de entrada</string>
+<string name="setting_provider_page_location">Ubicación (p. ej. us-central1)</string>
+<string name="setting_provider_page_model_count">%d modelos</string>
+<string name="setting_provider_page_model_display_name">Nombre mostrado del modelo</string>
+<string name="setting_provider_page_model_display_name_placeholder">p. ej.: GPT-3.5, para mostrarlo en la interfaz</string>
+<string name="setting_provider_page_model_id">ID del modelo</string>
+<string name="setting_provider_page_model_id_placeholder">p. ej.: gpt-3.5-turbo</string>
+<string name="setting_provider_page_model_name">Nombre del modelo</string>
+<string name="setting_provider_page_model_type">Tipo de modelo</string>
+<string name="setting_provider_page_models">Modelos</string>
+<string name="setting_provider_page_name">Nombre</string>
+<string name="setting_provider_page_no_models">No hay modelos</string>
+<string name="setting_provider_page_no_permission">Sin permiso</string>
+<string name="setting_provider_page_no_qr_found">No se encontró un código QR válido</string>
+<string name="setting_provider_page_output_modality">Modalidad de salida</string>
+<string name="setting_provider_page_private_key">Clave privada</string>
+<string name="setting_provider_page_project_id">ID del proyecto</string>
+<string name="setting_provider_page_provider_override">Configuración específica del proveedor</string>
+<string name="setting_provider_page_provider_override_desc">Configura ajustes personalizados del proveedor para este modelo concreto. Heredará las propiedades comunes del proveedor principal.</string>
+<string name="setting_provider_page_qr_decode_failed">No se pudo analizar el código QR: %s</string>
+<string name="setting_provider_page_reasoning">Razonamiento</string>
+<string name="setting_provider_page_response_api">Responses API</string>
+<string name="setting_provider_page_response_api_warning">Responses API es la API de nueva generación de OpenAI. La mayoría de los proveedores no la admiten. Si no sabes qué es, no la actives.</string>
+<string name="setting_provider_page_save">Guardar</string>
+<string name="setting_provider_page_save_success">Guardado correctamente</string>
+<string name="setting_provider_page_scan_error">Error: %s</string>
+<string name="setting_provider_page_scan_qr_code">Escanear código QR</string>
+<string name="setting_provider_page_search_providers">Buscar proveedores</string>
+<string name="setting_provider_page_recommend">Proveedores recomendados</string>
+<string name="setting_provider_page_select_all">Seleccionar todo (%1$d)</string>
+<string name="setting_provider_page_select_from_gallery">Seleccionar de la galería</string>
+<string name="setting_provider_page_service_account_email">Correo de la cuenta de servicio</string>
+<string name="setting_provider_page_test">Probar</string>
+<string name="setting_provider_page_test_connection">Probar conexión</string>
+<string name="setting_provider_page_text">Texto</string>
+<string name="setting_provider_page_title">Proveedores</string>
+<string name="setting_provider_page_tool">Herramienta</string>
+<string name="setting_provider_page_use_service_account">Usar cuenta de servicio</string>
+<string name="setting_provider_page_vertex_ai">Vertex AI</string>
+<string name="setting_tts_page_add">Añadir</string>
+<string name="setting_tts_page_add_provider">Añadir proveedor TTS</string>
+<string name="setting_tts_page_add_provider_content_description">Añadir proveedor TTS</string>
+<string name="setting_tts_page_api_key">Clave API</string>
+<string name="setting_tts_page_api_key_description">Clave API de tu proveedor</string>
+<string name="setting_tts_page_api_key_placeholder_gemini">AIza...</string>
+<string name="setting_tts_page_api_key_placeholder_openai">sk-...</string>
+<string name="setting_tts_page_base_url">URL base</string>
+<string name="setting_tts_page_base_url_description">Endpoint base de la API</string>
+<string name="setting_tts_page_base_url_placeholder">https://api.openai.com/v1</string>
+<string name="setting_tts_page_default_name">TTS del sistema</string>
+<string name="setting_tts_page_default_playback_speed">Velocidad de reproducción predeterminada</string>
+<string name="setting_tts_page_default_playback_speed_description">Se aplica localmente a todos los proveedores TTS sin cambiar sus ajustes de síntesis.</string>
+<string name="setting_tts_page_edit_provider">Editar proveedor</string>
+<string name="setting_tts_page_emotion">Emoción</string>
+<string name="setting_tts_page_emotion_description">Estilo emocional de la síntesis de voz</string>
+<string name="setting_tts_page_model">Modelo</string>
+<string name="setting_tts_page_model_description">Modelo TTS que se usará</string>
+<string name="setting_tts_page_model_placeholder_gemini">gemini-2.5-flash-preview-tts</string>
+<string name="setting_tts_page_model_placeholder_openai">gpt-4o-mini-tts</string>
+<string name="setting_tts_page_more_options_content_description">Más opciones</string>
+<string name="setting_tts_page_name">Nombre</string>
+<string name="setting_tts_page_name_description">Nombre personalizado para este proveedor TTS</string>
+<string name="setting_tts_page_name_placeholder">Introduce el nombre del proveedor</string>
+<string name="setting_tts_page_pitch">Tono</string>
+<string name="setting_tts_page_pitch_description">Controla el tono de la voz (0.1 - 2.0, 1.0 es normal)</string>
+<string name="setting_tts_page_provider_gemini">Gemini</string>
+<string name="setting_tts_page_provider_openai">OpenAI</string>
+<string name="setting_tts_page_provider_system">TTS del sistema</string>
+<string name="setting_tts_page_provider_type">Tipo de proveedor</string>
+<string name="setting_tts_page_provider_type_description">Selecciona el tipo de proveedor TTS</string>
+<string name="setting_tts_page_selected">Seleccionado</string>
+<string name="setting_tts_page_similarity_boost">Refuerzo de similitud</string>
+<string name="setting_tts_page_similarity_boost_description">Controla cuánto se parece la voz a la original (0.0 - 1.0)</string>
+<string name="setting_tts_page_speech_rate">Velocidad del habla</string>
+<string name="setting_tts_page_stability">Estabilidad</string>
+<string name="setting_tts_page_stability_description">Controla la estabilidad de la voz (0.0 - 1.0; valores bajos son más expresivos)</string>
+<string name="setting_tts_page_temperature">Temperatura</string>
+<string name="setting_tts_page_temperature_description">Controla la aleatoriedad de la voz (0.0 - 1.0; valores altos son más expresivos)</string>
+<string name="setting_tts_page_fish_audio_speed_description">Velocidad del habla (0.5 - 2.0, 1.0 es normal)</string>
+<string name="setting_tts_page_speech_rate_description">Controla la velocidad del habla (0.1 - 3.0, 1.0 es normal)</string>
+<string name="setting_tts_page_speed">Velocidad</string>
+<string name="setting_tts_page_speed_description">Velocidad del habla (0.25 - 4.0)</string>
+<string name="setting_tts_page_test_text">Hola, esta es una prueba de texto a voz.</string>
+<string name="setting_tts_page_title">Texto a voz</string>
+<string name="setting_tts_page_voice">Voz</string>
+<string name="setting_tts_page_voice_description">Voz que se usará para la síntesis</string>
+<string name="setting_tts_page_voice_id">ID de voz</string>
+<string name="setting_tts_page_voice_id_description">ID de la voz para la síntesis</string>
+<string name="setting_tts_page_voice_name">Nombre de la voz</string>
+<string name="setting_tts_page_voice_name_description">Nombre de la voz</string>
+<string name="setting_tts_page_voice_name_placeholder">Kore</string>
+<string name="settings">Ajustes</string>
+<string name="share">Compartir</string>
+<string name="share_handler_page_title">Seleccionar un asistente</string>
+<string name="shortcut_take_picture">Tomar foto y preguntar</string>
+<string name="silicon_flow_description">**Proveedor líder mundial de capacidades de IA, acelerando la AGI para beneficiar a la humanidad.**</string>
+<string name="silicon_flow_website">Sitio web: [https://cloud.siliconflow.cn/](https://cloud.siliconflow.cn/i/u1Ia4Ycf)</string>
+<string name="skill_detail_page_content">Contenido</string>
+<string name="skill_detail_page_create">Crear</string>
+<string name="skill_detail_page_delete_confirm">¿Seguro que quieres eliminar el archivo "%s"?</string>
+<string name="skill_detail_page_delete_failed">Error al eliminar</string>
+<string name="skill_detail_page_delete_file">Eliminar archivo</string>
+<string name="skill_detail_page_file_name">Nombre del archivo</string>
+<string name="skill_detail_page_file_name_invalid">Nombre de archivo no válido</string>
+<string name="skill_detail_page_new_file">Archivo nuevo</string>
+<string name="skill_detail_page_save">Guardar</string>
+<string name="skills_page_add_title">Añadir habilidad</string>
+<string name="skills_page_delete_message">¿Seguro que quieres eliminar "%s"? Esta acción no se puede deshacer.</string>
+<string name="skills_page_delete_title">Eliminar habilidad</string>
+<string name="skills_page_downloading">Descargando...</string>
+<string name="skills_page_empty_hint">Toca el botón + de la esquina inferior derecha para añadir una habilidad</string>
+<string name="skills_page_empty_title">No hay habilidades</string>
+<string name="skills_page_import_confirm">Importar</string>
+<string name="skills_page_import_description">Introduce la URL de un repositorio de GitHub y se descargará automáticamente el archivo SKILL.md del directorio raíz.</string>
+<string name="skills_page_import_failed">Error al importar: %s</string>
+<string name="skills_page_import_from_github">Importar desde GitHub</string>
+<string name="skills_page_import_success">Habilidad importada: %s</string>
+<string name="skills_page_more_actions">Más acciones</string>
+<string name="skills_page_name_error">No se encuentra el campo name; revisa el formato del frontmatter</string>
+<string name="skills_page_paste_hint">Pega el contenido completo del archivo SKILL.md</string>
+<string name="skills_page_repo_url_hint">Admite rutas /tree/branch o subdirectorios</string>
+<string name="skills_page_repo_url_label">URL del repositorio</string>
+<string name="skills_page_save">Guardar</string>
+<string name="skills_page_save_failed">No se pudo guardar; revisa el formato de la habilidad</string>
+<string name="skills_page_skill_content_label">Contenido de SKILL.md</string>
+<string name="skills_page_skill_name">Nombre de la habilidad: %s</string>
+<string name="skills_page_title">Habilidades del agente</string>
+<string name="skills_page_import_file">Importar archivo</string>
+<string name="skills_page_import_folder">Importar carpeta</string>
+<string name="skills_page_import_unsupported">Formato no compatible; selecciona un archivo .zip o .md</string>
+<string name="skills_page_import_invalid">Archivo de habilidad no válido: falta el campo name o description</string>
+<string name="skills_page_install_success">Instalado correctamente: %s</string>
+<string name="skills_page_import_skill_title">Importar habilidad</string>
+<string name="speech_page_title">Voz</string>
+<string name="speech_tab_asr">Reconocimiento de voz</string>
+<string name="speech_tab_tts">Texto a voz</string>
+<string name="stats_page_cached_tokens">Tokens en caché</string>
+<string name="stats_page_dow_fri">Vie</string>
+<string name="stats_page_dow_mon">Lun</string>
+<string name="stats_page_dow_wed">Mié</string>
+<string name="stats_page_heatmap_less">Menos</string>
+<string name="stats_page_heatmap_more">Más</string>
+<string name="stats_page_heatmap_title">Mapa de actividad del chat</string>
+<string name="stats_page_input_tokens">Tokens de entrada</string>
+<string name="stats_page_launch_count">Número de aperturas de la app</string>
+<string name="stats_page_output_tokens">Tokens de salida</string>
+<string name="stats_page_title">Estadísticas</string>
+<string name="stats_page_total_conversations">Conversaciones totales</string>
+<string name="stats_page_total_messages">Mensajes totales</string>
+<string name="stop">Detener</string>
+<string name="tag_input_dialog_create_new">Crear etiqueta nueva</string>
+<string name="tag_input_dialog_existing_tags">Etiquetas existentes</string>
+<string name="tag_input_dialog_label">Nombre de la etiqueta</string>
+<string name="tag_input_dialog_placeholder">Introduce el nombre de la etiqueta...</string>
+<string name="tag_input_dialog_tag_exists">Ya existe una etiqueta con este nombre</string>
+<string name="tag_input_dialog_title">Añadir etiqueta</string>
+<string name="take_picture">Tomar foto</string>
+<string name="test_tts">Probar TTS</string>
+<string name="text_area_fullscreen_edit">Editar en pantalla completa</string>
+<string name="text_area_import_failed">No se pudo importar el archivo</string>
+<string name="text_area_import_from_file">Importar desde archivo</string>
+<string name="text_area_import_success">Archivo importado correctamente</string>
+<string name="text_area_save">Guardar</string>
+<string name="theme_name_autumn">Amarillo otoñal</string>
+<string name="theme_name_black">Negro neutro</string>
+<string name="theme_name_claude">Claude</string>
+<string name="slash_help_title">Comandos disponibles</string>
+<string name="slash_help_close">Cerrar</string>
+<string name="slash_help_tip">Los comandos sin argumentos se ejecutan al tocarlos; los que tienen argumentos rellenan el campo de entrada para que los completes</string>
+<string name="slash_help_params">Parámetros</string>
+<string name="slash_help_examples">Ejemplos</string>
+<string name="slash_help_example_prefix">Ej.: </string>
+<string name="slash_param_sys_name_name">name=</string>
+<string name="slash_param_sys_name_desc">Nombre mostrado (predeterminado: System)</string>
+<string name="slash_param_sys_name_example">/sys name=Narrador Una noche lluviosa, calles vacías</string>
+<string name="slash_param_sys_at_name">at=</string>
+<string name="slash_param_sys_at_desc">Posición de inserción: valores no negativos cuentan desde el inicio y negativos desde el final (-1 = antes del último mensaje)</string>
+<string name="slash_param_sys_at_example">/sys at=-1 La batalla terminó, todo quedó en silencio</string>
+<string name="slash_param_sendas_name_name">name=</string>
+<string name="slash_param_sendas_name_desc">Hablar como este personaje (predeterminado: nombre del personaje actual)</string>
+<string name="slash_param_sendas_name_example">/sendas name=Ningning Abrió suavemente la ventana</string>
+<string name="slash_param_sendas_at_name">at=</string>
+<string name="slash_param_sendas_at_desc">Posición de inserción (igual que /sys at)</string>
+<string name="slash_param_sendas_at_example">/sendas at=0 Línea inicial</string>
+<string name="slash_param_send_name_name">name=</string>
+<string name="slash_param_send_name_desc">Nombre mostrado (predeterminado: tu nombre)</string>
+<string name="slash_param_send_name_example">/send name=Yo Quiero ir al mercado nocturno</string>
+<string name="slash_param_send_at_name">at=</string>
+<string name="slash_param_send_at_desc">Posición de inserción (igual que /sys at)</string>
+<string name="slash_param_send_at_example">/send at=0 Primera línea</string>
+<string name="slash_param_persona_mode_name">mode=</string>
+<string name="slash_param_persona_mode_desc">lookup: elegir una persona existente / temp: definir nombre temporal de usuario / all: probar primero persona y después temp (predeterminado)</string>
+<string name="slash_param_persona_mode_example">/persona mode=temp Apodo</string>
+<string name="slash_param_persona_off_name">off / none</string>
+<string name="slash_param_persona_off_desc">Desactivar la persona actual</string>
+<string name="slash_param_persona_off_example">/persona off</string>
+<string name="slash_param_sysgen_name_name">name=</string>
+<string name="slash_param_sysgen_name_desc">Nombre mostrado para la narración (predeterminado: System)</string>
+<string name="slash_param_sysgen_name_example">/sysgen name=Narrador Describe el pasillo por la noche</string>
+<string name="slash_param_sysgen_at_name">at=</string>
+<string name="slash_param_sysgen_at_desc">Posición de inserción (igual que /sys at)</string>
+<string name="slash_param_sysgen_at_example">/sysgen at=-1 Describe la mano sujetando la espada</string>
+<string name="slash_param_sysgen_trim_name">trim=</string>
+<string name="slash_param_sysgen_trim_desc">true recorta el resultado a oraciones completas</string>
+<string name="slash_param_sysgen_trim_example">/sysgen trim=true Describe la calle después de la lluvia</string>
+<string name="slash_param_char_update_field_name">field=value</string>
+<string name="slash_param_char_update_field_desc">Actualiza varios campos a la vez: name/description/personality/scenario/systemPrompt/firstMessage/messageExamples/creatorNotes/postHistoryInstructions/characterVersion/creator/tags; pon entre comillas los valores que contengan espacios</string>
+<string name="slash_param_char_update_field_example">/char-update description=nueva descripción name=nuevo nombre</string>
+<string name="slash_param_char_update_tags_name">tags=</string>
+<string name="slash_param_char_update_tags_desc">Etiquetas separadas por comas</string>
+<string name="slash_param_char_update_tags_example">/char-update tags=guerrero,tranquilo</string>
+<string name="slash_param_rename_char_name_name">nuevo nombre</string>
+<string name="slash_param_rename_char_name_desc">Nombre al que se cambiará</string>
+<string name="slash_param_rename_char_name_example">/rename-char Sirvienta</string>
+<string name="slash_param_continue_text_name">texto extra</string>
+<string name="slash_param_continue_text_desc">Texto adicional que se añade antes de continuar (opcional; vacío = continuar directamente)</string>
+<string name="slash_param_continue_text_example">/continue Entonces se giró para mirar por la ventana</string>
+<string name="slash_param_impersonate_prompt_name">prompt</string>
+<string name="slash_param_impersonate_prompt_desc">Guía para lo que dirá la IA (opcional)</string>
+<string name="slash_param_impersonate_prompt_example">/impersonate Cómo responderías a esta provocación</string>
+<string name="slash_param_gen_trim_name">trim=</string>
+<string name="slash_param_gen_trim_desc">true reemplaza el campo de entrada; false (predeterminado) añade el resultado al final</string>
+<string name="slash_param_gen_trim_example">/gen trim=true Escribe un poema</string>
+<string name="slash_param_gen_as_name">as=</string>
+<string name="slash_param_gen_as_desc">char: genera desde la perspectiva del personaje (combínalo con name=); de forma predeterminada usa la perspectiva del sistema</string>
+<string name="slash_param_gen_as_example">/gen as=char name=Ningning Cómo respondería ella</string>
+<string name="slash_param_gen_length_name">length=</string>
+<string name="slash_param_gen_length_desc">Tokens máximos de generación (reemplaza temporalmente el ajuste del modelo)</string>
+<string name="slash_param_gen_length_example">/gen length=200 Escribe una escena de batalla</string>
+<string name="slash_param_gen_name_name">name=</string>
+<string name="slash_param_gen_name_desc">Selecciona el personaje por nombre cuando as=char</string>
+<string name="slash_param_gen_name_example">/gen name=Ningning Qué diría Ningning al ver las estrellas</string>
+<string name="slash_param_setvar_name_name">nombre de variable</string>
+<string name="slash_param_setvar_name_desc">Variable que se definirá (también funciona la sintaxis key=)</string>
+<string name="slash_param_setvar_name_example">/setvar key=afecto 50</string>
+<string name="slash_param_setvar_value_name">valor</string>
+<string name="slash_param_setvar_value_desc">Valor de la variable; usa comillas si contiene espacios</string>
+<string name="slash_param_setvar_value_example">/setvar nombre Juan Pérez</string>
+<string name="slash_param_getvar_name_name">nombre de variable</string>
+<string name="slash_param_getvar_name_desc">Variable que se leerá (también funciona la sintaxis key=)</string>
+<string name="slash_param_getvar_name_example">/getvar key=afecto</string>
+<string name="slash_param_addvar_name_name">nombre de variable</string>
+<string name="slash_param_addvar_name_desc">Variable a la que se añadirá el valor</string>
+<string name="slash_param_addvar_name_example">/addvar dinero 50</string>
+<string name="slash_param_addvar_value_name">número</string>
+<string name="slash_param_addvar_value_desc">Valor que se añadirá (admite decimales)</string>
+<string name="slash_param_addvar_value_example">/addvar afecto 10.5</string>
+<string name="slash_param_incvar_name_name">nombre de variable</string>
+<string name="slash_param_incvar_name_desc">Variable que se incrementará</string>
+<string name="slash_param_incvar_name_example">/incvar dinero</string>
+<string name="slash_param_decvar_name_name">nombre de variable</string>
+<string name="slash_param_decvar_name_desc">Variable que se reducirá</string>
+<string name="slash_param_decvar_name_example">/decvar dinero</string>
+<string name="slash_param_flushvar_name_name">nombre de variable</string>
+<string name="slash_param_flushvar_name_desc">Variable que se eliminará</string>
+<string name="slash_param_flushvar_name_example">/flushvar dinero</string>
+<string name="slash_example_sys_1_cmd">/sys Una noche lluviosa, las farolas parpadean</string>
+<string name="slash_example_sys_1_desc">Inserta un mensaje del sistema al final del chat</string>
+<string name="slash_example_sys_2_cmd">/sys name=Narrador at=-1 Ella apretó su espada</string>
+<string name="slash_example_sys_2_desc">Narrador con nombre, insertado antes del último mensaje</string>
+</resources>

@@ -37,7 +37,7 @@ import org.koin.androidx.compose.koinViewModel
 /**
  * AI 主动发消息设置页.
  *
- * 功能: 总开关（带风险确认）/ 触发间隔范围 / 助手选择 / 精确闹钟与电池优化指引.
+ * 功能: 总开关（带风险确认）/ 触发间隔范围 / 助手选择 / 精确闹钟与Optimización de batería指引.
  */
 @Composable
 fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
@@ -65,7 +65,7 @@ fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             LargeFlexibleTopAppBar(
-                title = { Text("主动消息") },
+                title = { Text("Mensajes proactivos") },
                 navigationIcon = { BackButton() },
                 scrollBehavior = scrollBehavior,
             )
@@ -88,8 +88,8 @@ fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
                 }
                 CardGroup {
                     item(
-                        headlineContent = { Text("启用主动消息") },
-                        supportingContent = { Text("开启后 AI 立即主动发一条消息，之后按设定间隔循环") },
+                        headlineContent = { Text("Activar mensajes proactivos") },
+                        supportingContent = { Text("Al activarlo, la IA enviará un mensaje inmediatamente y después seguirá el intervalo configurado") },
                         trailingContent = {
                             Switch(
                                 checked = settings.proactiveMessageSetting.enabled,
@@ -107,7 +107,7 @@ fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
                     )
                     if (settings.proactiveMessageSetting.enabled) {
                         item(
-                            headlineContent = { Text("下次触发时间") },
+                            headlineContent = { Text("Próxima activación") },
                             supportingContent = {
                                 val currentTime = System.currentTimeMillis()
                                 val triggerTime = nextTime
@@ -116,23 +116,23 @@ fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
                                     val remainMinutes = remaining / 60_000
                                     val remainSeconds = (remaining % 60_000) / 1000
                                     val sdf = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.getDefault())
-                                    Text("${sdf.format(java.util.Date(triggerTime))}（剩余 ${remainMinutes}分${remainSeconds}秒）")
+                                    Text("${sdf.format(java.util.Date(triggerTime))} (faltan ${remainMinutes} min ${remainSeconds} s)")
                                 } else {
-                                    Text("等待调度中...")
+                                    Text("Esperando programación...")
                                 }
                             }
                         )
                     }
                     item(
-                        headlineContent = { Text("使用助手") },
-                        supportingContent = { Text("优先使用当前助手: ${settings.getCurrentAssistant().name.ifBlank { "未命名" }}") }
+                        headlineContent = { Text("Usar asistente") },
+                        supportingContent = { Text("Usar preferentemente el asistente actual: ${settings.getCurrentAssistant().name.ifBlank { "Sin nombre" }}") }
                     )
                 }
             }
             item {
                 CardGroup {
                     item(
-                        headlineContent = { Text("最小间隔 (分钟)") },
+                        headlineContent = { Text("Intervalo mínimo (minutos)") },
                         supportingContent = {
                             OutlinedTextField(
                                 value = settings.proactiveMessageSetting.minIntervalMinutes.toString(),
@@ -155,7 +155,7 @@ fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
                         },
                     )
                     item(
-                        headlineContent = { Text("最大间隔 (分钟)") },
+                        headlineContent = { Text("Intervalo máximo (minutos)") },
                         supportingContent = {
                             OutlinedTextField(
                                 value = settings.proactiveMessageSetting.maxIntervalMinutes.toString(),
@@ -182,9 +182,9 @@ fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
             item {
                 CardGroup {
                     item(
-                        headlineContent = { Text("强制跳转屏幕") },
+                        headlineContent = { Text("Forzar apertura de pantalla") },
                         supportingContent = {
-                            Text("开启后 AI 可通过 [JUMP] 标记自行判断拉起聊天界面，且仅当用户超过闲置阈值未回复时才生效")
+                            Text("Permite que la IA use la marca [JUMP] para decidir abrir la pantalla del chat; sólo funciona cuando el usuario supera el umbral de inactividad sin responder")
                         },
                         trailingContent = {
                             Switch(
@@ -203,7 +203,7 @@ fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
                     )
                     if (settings.proactiveMessageSetting.allowForceJump) {
                         item(
-                            headlineContent = { Text("闲置阈值 (分钟)") },
+                            headlineContent = { Text("Umbral de inactividad (minutos)") },
                             supportingContent = {
                                 OutlinedTextField(
                                     value = settings.proactiveMessageSetting.jumpIdleThresholdMinutes.toString(),
@@ -233,12 +233,12 @@ fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
                     val hasExactAlarm = ProactiveMessageWorker.canScheduleExactAlarms(context)
                     CardGroup {
                         item(
-                            headlineContent = { Text("精确闹钟权限") },
+                            headlineContent = { Text("Permiso de alarmas exactas") },
                             supportingContent = {
                                 if (hasExactAlarm) {
-                                    Text("已授予精确闹钟权限，定时触发将更准确")
+                                    Text("Permiso de alarmas exactas concedido; las activaciones serán más precisas")
                                 } else {
-                                    Text("未授予精确闹钟权限，触发时间可能不精确。已自动使用 WorkManager 作为备用方案。")
+                                    Text("No se concedió el permiso de alarmas exactas; la hora puede ser menos precisa. WorkManager se usa automáticamente como respaldo.")
                                 }
                             },
                             onClick = if (!hasExactAlarm) {
@@ -262,12 +262,12 @@ fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
                 val isIgnoring = ProactiveMessageWorker.isIgnoringBatteryOptimizations(context)
                 CardGroup {
                     item(
-                        headlineContent = { Text("电池优化") },
+                        headlineContent = { Text("Optimización de batería") },
                         supportingContent = {
                             if (isIgnoring) {
-                                Text("已忽略电池优化，后台触发更稳定")
+                                Text("La optimización de batería está ignorada; las activaciones en segundo plano serán más estables")
                             } else {
-                                Text("未忽略电池优化，系统可能限制后台活动导致消息无法准时触发。建议关闭电池优化。")
+                                Text("La optimización de batería puede limitar la actividad en segundo plano y retrasar mensajes. Se recomienda excluir la app.")
                             }
                         },
                         onClick = if (!isIgnoring) {
@@ -289,9 +289,9 @@ fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
             item {
                 CardGroup {
                     item(
-                        headlineContent = { Text("说明") },
+                        headlineContent = { Text("Información") },
                         supportingContent = {
-                            Text("启用后，AI 会在设定的最小和最大间隔之间随机一个时间点主动给你发消息。你回复后计时器重置，重新开始随机计时；不回复则继续循环发消息。AI 可以自己思考选择要不要回复，如果觉得没什么好说的可以跳过。\n\n提示：同时使用 AlarmManager + WorkManager 双重调度，确保消息能准时触发。")
+                            Text("Al activarlo, la IA elegirá aleatoriamente un momento entre los intervalos mínimo y máximo para escribirte. Cuando respondas, el temporizador se reinicia; si no respondes, seguirá enviando mensajes por ciclos. La IA puede decidir omitir un mensaje si no tiene nada relevante que decir.\n\nNota: usa AlarmManager + WorkManager para mejorar la puntualidad.")
                         },
                     )
                 }

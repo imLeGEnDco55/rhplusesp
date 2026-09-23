@@ -1,0 +1,348 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+<string name="slash_example_sendas_1_cmd">/sendas Ella sonrió ligeramente</string>
+<string name="slash_example_sendas_1_desc">Inserta un mensaje del asistente como el personaje actual (sin generar)</string>
+<string name="slash_example_sendas_2_cmd">/sendas name=Ningning at=-1 Pensó para sí misma</string>
+<string name="slash_example_sendas_2_desc">Como Ningning, insertado antes del último mensaje</string>
+<string name="slash_example_send_1_cmd">/send Cambiemos de tema</string>
+<string name="slash_example_send_1_desc">Inserta un mensaje de usuario como tú mismo (sin generar)</string>
+<string name="slash_example_send_2_cmd">/send name=Viajero Me voy mañana</string>
+<string name="slash_example_send_2_desc">Insertado con el nombre Viajero</string>
+<string name="slash_example_persona_1_cmd">/persona Chino</string>
+<string name="slash_example_persona_1_desc">Cambia a la persona guardada Chino</string>
+<string name="slash_example_persona_2_cmd">/persona mode=temp Aventurero</string>
+<string name="slash_example_persona_2_desc">Define sólo un nombre temporal de usuario, sin guardarlo como persona</string>
+<string name="slash_example_persona_3_cmd">/persona off</string>
+<string name="slash_example_persona_3_desc">Desactiva la persona actual</string>
+<string name="slash_example_sysgen_1_cmd">/sysgen Describe la calle lluviosa de noche</string>
+<string name="slash_example_sysgen_1_desc">Pide a la IA que escriba una narración del sistema y la inserte (activa una generación)</string>
+<string name="slash_example_sysgen_2_cmd">/sysgen trim=true name=Narrador Describe el conflicto interno del personaje</string>
+<string name="slash_example_sysgen_2_desc">Recortado a oraciones completas e insertado como Narrador</string>
+<string name="slash_example_char_update_1_cmd">/char-update name=Sirvienta</string>
+<string name="slash_example_char_update_1_desc">Cambia el nombre del personaje</string>
+<string name="slash_example_char_update_2_cmd">/char-update firstMessage=Buenos días, soy el aventurero presentándome</string>
+<string name="slash_example_char_update_2_desc">Cambia el primer mensaje</string>
+<string name="slash_example_char_update_3_cmd">/char-update name=A description=B tags=guerrero</string>
+<string name="slash_example_char_update_3_desc">Actualiza varios campos a la vez</string>
+<string name="slash_example_rename_char_1_cmd">/rename-char Sirvienta</string>
+<string name="slash_example_rename_char_1_desc">Cambia el nombre del personaje actual a Sirvienta</string>
+<string name="slash_example_continue_1_cmd">/continue</string>
+<string name="slash_example_continue_1_desc">Permite que la IA siga escribiendo después de la última respuesta</string>
+<string name="slash_example_continue_2_cmd">/continue Entonces se giró para mirar por la ventana</string>
+<string name="slash_example_continue_2_desc">Continúa después de añadir texto extra</string>
+<string name="slash_example_impersonate_1_cmd">/impersonate</string>
+<string name="slash_example_impersonate_1_desc">Hace que la IA redacte tu siguiente línea desde tu perspectiva y la coloque en el campo de entrada</string>
+<string name="slash_example_impersonate_2_cmd">/impersonate Cómo responderías a esta provocación</string>
+<string name="slash_example_impersonate_2_desc">Genera tu línea siguiendo una guía</string>
+<string name="slash_example_gen_1_cmd">/gen Escribe un poema sobre el cielo estrellado</string>
+<string name="slash_example_gen_1_desc">Se genera con instrucción del sistema y se añade al campo de entrada</string>
+<string name="slash_example_gen_2_cmd">/gen trim=true as=char name=Ningning Qué pensaría ella de la nieve cayendo</string>
+<string name="slash_example_gen_2_desc">Reemplaza el campo de entrada y se genera desde la perspectiva de Ningning</string>
+<string name="slash_example_gen_3_cmd">/gen length=200 Describe una batalla nocturna</string>
+<string name="slash_example_gen_3_desc">Limitado a 200 tokens</string>
+<string name="slash_example_setvar_1_cmd">/setvar dinero 100</string>
+<string name="slash_example_setvar_1_desc">Define la variable dinero en 100</string>
+<string name="slash_example_setvar_2_cmd">/setvar key=afecto 50</string>
+<string name="slash_example_setvar_2_desc">Define usando la sintaxis key= (admite espacios/comillas)</string>
+<string name="slash_example_getvar_1_cmd">/getvar dinero</string>
+<string name="slash_example_getvar_1_desc">Lee el valor de la variable dinero</string>
+<string name="slash_example_getvar_2_cmd">/getvar key=afecto</string>
+<string name="slash_example_getvar_2_desc">Lee usando la sintaxis key=</string>
+<string name="slash_example_addvar_1_cmd">/addvar dinero 50</string>
+<string name="slash_example_addvar_1_desc">Suma numérica: 100 + 50 = 150</string>
+<string name="slash_example_addvar_2_cmd">/addvar afecto 10.5</string>
+<string name="slash_example_addvar_2_desc">Admite suma decimal</string>
+<string name="slash_example_incvar_1_cmd">/incvar dinero</string>
+<string name="slash_example_incvar_1_desc">Variable +1 (empieza en 0 si no existe)</string>
+<string name="slash_example_decvar_1_cmd">/decvar dinero</string>
+<string name="slash_example_decvar_1_desc">Variable -1 (empieza en 0 si no existe)</string>
+<string name="slash_example_flushvar_1_cmd">/flushvar dinero</string>
+<string name="slash_example_flushvar_1_desc">Elimina la variable dinero</string>
+<string name="slash_toast_generating">Generando… espera a que termine</string>
+<string name="slash_toast_not_supported">Este comando no es compatible con esta página</string>
+<string name="slash_toast_gen_usage">Uso: /gen [trim=true] [as=char] [length=tokens] [name=nombre] prompt (por defecto usa instrucción del sistema)</string>
+<string name="slash_toast_gen_done_replace">Generado — revísalo antes de enviar</string>
+<string name="slash_toast_gen_done_append">Generado y añadido al campo de entrada — revísalo antes de enviar</string>
+<string name="slash_toast_sys_usage">Uso: /sys [name=nombre mostrado] [at=posición] mensaje del sistema</string>
+<string name="slash_toast_sendas_usage">Uso: /sendas [name=nombre del personaje] [at=posición] texto</string>
+<string name="slash_toast_send_usage">Uso: /send [name=nombre mostrado] [at=posición] texto</string>
+<string name="slash_toast_persona_mode">mode debe ser lookup / temp / all</string>
+<string name="slash_toast_sysgen_usage">Uso: /sysgen [name=nombre mostrado] [at=posición] [trim=true] prompt; p. ej. describe una calle lluviosa de noche</string>
+<string name="slash_toast_var_usage_value">Uso: /%1$s variable valor (también admite key=nombre)</string>
+<string name="slash_toast_var_usage">Uso: /%1$s variable</string>
+<string name="slash_toast_rename_usage">Uso: /rename-char nuevo nombre</string>
+<string name="slash_toast_renamed">Renombrado a: %1$s</string>
+<string name="slash_toast_char_update_usage">Uso: /char-update field=value [field2=value2 ...] (name/description/personality/scenario/systemPrompt/firstMessage/messageExamples/creatorNotes/postHistoryInstructions/characterVersion/creator/tags)</string>
+<string name="slash_toast_no_char_card">El asistente actual no tiene tarjeta de personaje</string>
+<string name="slash_toast_char_updated">Actualizado: %1$s</string>
+<string name="slash_toast_unknown_field">Campo desconocido: %1$s</string>
+<string name="slash_toast_draft_ready">Tu borrador de respuesta está listo — revísalo antes de enviar</string>
+<string name="slash_toast_reroll_done">Se volvieron a sortear los detalles aleatorios (semilla %1$s) — se aplicará en la siguiente respuesta</string>
+<string name="slash_toast_no_model">Selecciona primero un modelo</string>
+<string name="slash_field_name">Nombre</string>
+<string name="slash_field_description">Descripción</string>
+<string name="slash_field_personality">Personalidad</string>
+<string name="slash_field_scenario">Escenario</string>
+<string name="slash_field_system_prompt">Prompt del sistema</string>
+<string name="slash_field_first_message">Primer mensaje</string>
+<string name="slash_field_message_examples">Ejemplos de mensajes</string>
+<string name="slash_field_post_history_instructions">Instrucciones posteriores al historial</string>
+<string name="slash_field_creator">Creador</string>
+<string name="slash_field_creator_notes">Notas del creador</string>
+<string name="slash_field_character_version">Versión del personaje</string>
+<string name="slash_field_tags">Etiquetas</string>
+<string name="slash_field_sep">, </string>
+<string name="slash_ui_script_badge">Script</string>
+<string name="slash_ui_collapse">Contraer</string>
+<string name="slash_ui_expand">Expandir</string>
+<string name="slash_var_unset">(sin definir)</string>
+<string name="slash_var_deleted">Eliminado %1$s</string>
+<string name="slash_var_empty">(sin variables)</string>
+<string name="slash_var_list_prefix">Este chat: </string>
+<string name="slash_sysgen_status">Generando narración del sistema…</string>
+<string name="slash_error_sysgen_no_messages">No hay mensajes en esta conversación — no se puede generar narración</string>
+<string name="slash_error_no_model">Selecciona primero un modelo</string>
+<string name="slash_error_sysgen_empty">La narración generada está vacía</string>
+<string name="slash_error_continue_no_message">No hay un mensaje del asistente que continuar</string>
+<string name="slash_toast_char_duplicated">Tarjeta de personaje duplicada: %1$s</string>
+<string name="slash_toast_persona_current">Persona actual: %1$s (escribe /persona nombre para cambiar)</string>
+<string name="slash_toast_persona_none_active">No hay persona activa (disponibles: %1$s)</string>
+<string name="slash_toast_persona_off">Persona desactivada</string>
+<string name="slash_toast_persona_already_off">Ya no hay ninguna persona activa</string>
+<string name="slash_toast_persona_not_found">No se encontró la persona "%1$s"</string>
+<string name="slash_toast_persona_temp_set">Nombre temporal de usuario definido: %1$s</string>
+<string name="slash_toast_persona_switched">Se cambió a la persona: %1$s</string>
+<string name="slash_toast_persona_fallback">No se encontró la persona "%1$s" — se definió un nombre temporal de usuario según el comportamiento oficial: %2$s</string>
+<string name="slash_toast_trigger_no_messages">Aún no hay mensajes — no se puede activar una respuesta</string>
+<string name="slash_ui_unnamed">Sin nombre</string>
+<string name="slash_ui_copy_suffix"> (copia)</string>
+<string name="chat_page_select_opening">Seleccionar inicio</string>
+<string name="chat_page_opening_current">Actual</string>
+<string name="prompt_page_ignore_budget_desc">Esta entrada ignora el presupuesto de tokens de información del mundo y siempre se inyecta</string>
+<string name="prompt_page_rounds_suffix">turnos</string>
+<string name="prompt_page_scan_depth_global">Predeterminado (global)</string>
+<string name="prompt_page_delay_until_recursion_desc">Sólo se comprueba después de N rondas de recursión</string>
+<string name="prompt_page_vector_trigger_desc">Activar por vector cuando esté desactivado</string>
+<string name="prompt_page_prevent_recursion_desc">El contenido no participa en el escaneo recursivo</string>
+<string name="prompt_page_use_group_scoring_desc">Elige el ganador del grupo según el número de palabras clave coincidentes</string>
+<string name="prompt_page_group_weight_preview">Peso: %d</string>
+<string name="prompt_page_constant_preview">Constante</string>
+<string name="prompt_page_trigger_preview">Activador</string>
+<string name="tavern_field_system_prompt">Prompt del sistema</string>
+<string name="tavern_field_description">Descripción</string>
+<string name="tavern_field_personality">Personalidad</string>
+<string name="tavern_field_scenario">Escenario</string>
+<string name="tavern_field_mes_example">Ejemplos</string>
+<string name="tavern_field_phi">PHI</string>
+<string name="tavern_field_first_message">Primer mensaje</string>
+<string name="tavern_field_creator_notes">Notas del autor</string>
+<string name="tavern_group_char_info">Información del personaje</string>
+<string name="tavern_group_greetings">Saludos</string>
+<string name="prompt_page_pos_em_top">EM arriba</string>
+<string name="prompt_page_pos_em_bottom">EM abajo</string>
+<string name="prompt_page_role_system">Sistema</string>
+<string name="prompt_page_trigger_normal">Normal</string>
+<string name="prompt_page_trigger_continue">Continuar</string>
+<string name="prompt_page_trigger_impersonate">Impersonar</string>
+<string name="prompt_page_trigger_swipe">Deslizar</string>
+<string name="prompt_page_trigger_regenerate">Regenerar</string>
+<string name="prompt_page_trigger_quiet">Silencioso</string>
+<string name="prompt_page_logic_and_any">Y CUALQUIERA</string>
+<string name="prompt_page_logic_and_all">Y TODOS</string>
+<string name="prompt_page_logic_not_all">NO TODOS</string>
+<string name="prompt_page_logic_not_any">NO CUALQUIERA</string>
+<string name="prompt_page_logic_or_any">O CUALQUIERA</string>
+<string name="persona_page_position_in_prompt">En el prompt</string>
+<string name="persona_page_position_top">Inicio de la nota del autor</string>
+<string name="persona_page_position_bottom">Final de la nota del autor</string>
+<string name="persona_page_position_at_depth">A una profundidad (profundidad %d)</string>
+<string name="persona_page_position_none">Ninguna</string>
+<string name="slash_category_variables">Variables</string>
+<string name="slash_category_character">Tarjetas de personaje</string>
+<string name="slash_category_other">Otros</string>
+<string name="slash_category_skills">Habilidades</string>
+<string name="slash_category_message">Mensajes y generación</string>
+<string name="persona_page_current">Actual: %s</string>
+<string name="persona_page_inactive">Inactiva</string>
+<string name="persona_page_injected">Inyectada en el prompt</string>
+<string name="persona_page_select_hint">Selecciona una persona para activarla</string>
+<string name="persona_page_unnamed">Sin nombre</string>
+<string name="persona_page_position_label">Posición:</string>
+<string name="persona_page_delete">Eliminar persona</string>
+<string name="persona_page_edit">Editar persona</string>
+<string name="persona_page_new">Nueva persona</string>
+<string name="persona_page_back">Atrás</string>
+<string name="persona_page_presets">Preajustes rápidos (%d)</string>
+<string name="persona_page_position_merge_desc">Las opciones superior/inferior se combinan con la nota del autor y siguen su intervalo</string>
+<string name="persona_page_role_system">Sistema</string>
+<string name="persona_page_role_user">Usuario</string>
+<string name="persona_page_role_assistant">Asistente</string>
+<string name="persona_page_position_at_depth_short">A una profundidad</string>
+<string name="persona_page_empty">Aún no hay personas</string>
+<string name="persona_page_empty_hint">Crea una persona e inyéctala en el chat para que la IA conozca tu identidad y estilo</string>
+<string name="group_member_subtitle">%1$d miembros · %2$s</string>
+<string name="group_auto_reply_rounds_desc">0 = ilimitado; en cada ronda hablan una vez todos los miembros activados; enviar un mensaje interrumpe</string>
+<string name="theme_name_minimal">Blanco minimalista</string>
+<string name="theme_name_ocean">Azul océano</string>
+<string name="theme_name_sakura">Rosa sakura</string>
+<string name="theme_name_spring">Verde pradera</string>
+<string name="title_activity_safe_mode">Modo seguro</string>
+<string name="tools_warning">El modelo actual no tiene activadas las llamadas a herramientas. Activa las capacidades de herramientas del modelo en los ajustes para usar funciones como búsqueda/MCP.</string>
+<string name="translate">Traducir</string>
+<string name="translating">Traduciendo...</string>
+<string name="translation_clear">Borrar traducción</string>
+<string name="translation_language_selection_title">Seleccionar idioma de traducción</string>
+<string name="translation_text">Traducción</string>
+<string name="translator_page_cancel">Cancelar</string>
+<string name="translator_page_input_placeholder">Introduce el texto que quieres traducir...</string>
+<string name="translator_page_result_placeholder">El resultado de la traducción aparecerá aquí</string>
+<string name="translator_page_title">Traductor</string>
+<string name="translator_page_translate">Traducir</string>
+<string name="tts">TTS</string>
+<string name="unpin_chat">Desfijar chat</string>
+<string name="update_card_check_failed">No se pudo comprobar la actualización</string>
+<string name="update_card_close">Cerrar</string>
+<string name="update_card_downloading">Descargando; consulta la barra de estado para ver el progreso</string>
+<string name="update_card_new_version_found">Nueva versión encontrada %s</string>
+<string name="update_card_unknown_error">Error desconocido</string>
+<string name="upload_file">Subir archivo</string>
+<string name="use_web_search">Búsqueda web</string>
+<string name="user_default_name">Usuario</string>
+<string name="video">Video</string>
+<string name="web_search_disabled">Búsqueda web desactivada</string>
+<string name="web_search_enabled">Búsqueda web activada</string>
+<string name="setting_theme_page_delete_theme_title">Eliminar tema</string>
+<string name="setting_theme_page_delete_theme_message">¿Seguro que quieres eliminar este tema?</string>
+<string name="assistant_importer_import_success">Tarjeta de personaje importada correctamente</string>
+<string name="prompt_page_secondary_keys_label">Filtro opcional</string>
+<string name="prompt_page_selective">Modo selectivo</string>
+<string name="prompt_page_selective_desc">Usa palabras clave secundarias para lógica avanzada de activación</string>
+<string name="prompt_page_selective_logic">Lógica</string>
+<string name="prompt_page_group">Grupo</string>
+<string name="prompt_page_group_weight">Peso del grupo</string>
+<string name="prompt_page_group_override">Priorizar</string>
+<string name="prompt_page_probability">Probabilidad: %d%%</string>
+<string name="prompt_page_sticky">Persistente</string>
+<string name="prompt_page_cooldown">Enfriamiento</string>
+<string name="prompt_page_delay">Retraso</string>
+<string name="prompt_page_triggers">Activadores</string>
+<string name="prompt_page_ignore_budget">Ignorar presupuesto</string>
+<string name="prompt_page_match_scope">Coincidencia</string>
+<string name="prompt_page_use_group_scoring">Usar puntuación por grupo</string>
+<string name="prompt_page_automation_id">ID de automatización</string>
+<string name="prompt_page_display_index">Índice de visualización</string>
+<string name="prompt_page_display_position">Posición de visualización</string>
+<string name="prompt_page_insertion_position">Posición</string>
+<string name="prompt_page_probability_label">Probabilidad</string>
+<string name="prompt_page_trigger_control">Activador</string>
+<string name="prompt_page_insert_control">Insertar</string>
+<string name="prompt_page_official_advanced">Avanzado oficial</string>
+<string name="prompt_page_keyword_trigger">Palabra clave</string>
+<string name="prompt_page_match_char_description">Descripción del personaje</string>
+<string name="prompt_page_match_char_personality">Personalidad del personaje</string>
+<string name="prompt_page_match_char_depth_prompt">Prompt de profundidad</string>
+<string name="prompt_page_match_scenario">Escenario</string>
+<string name="prompt_page_match_creator_notes">Notas del creador</string>
+<string name="prompt_page_match_persona">Descripción de la persona</string>
+<string name="prompt_page_embedded_lorebook">Lorebook incrustado</string>
+<string name="prompt_page_ungrouped">Sin grupo</string>
+<string name="prompt_page_match_recursion">Coincidencia y recursión</string>
+<string name="prompt_page_save_changes">Guardar</string>
+<string name="prompt_page_triggers_desc">Separados por comas; vacío = todos los tipos de generación</string>
+<string name="prompt_page_apply_to_entries">Aplicar a %d entradas</string>
+<string name="tavern_export_title">Exportar tarjeta de personaje</string>
+<string name="tavern_export_download_dir">Exportar a la carpeta Descargas</string>
+<string name="tavern_export_json">Archivo JSON</string>
+<string name="tavern_export_json_desc">Exporta el JSON V3 de la tarjeta de personaje sin imágenes</string>
+<string name="tavern_export_png">PNG incrustado</string>
+<string name="tavern_export_png_desc_avatar">Combina con el avatar actual y exporta</string>
+<string name="tavern_export_png_desc_network">El avatar es una imagen de red; se descargará y combinará</string>
+<string name="tavern_export_png_desc_pick">Elige una imagen de avatar para combinar y exportar</string>
+<string name="tavern_export_png_downloading">Descargando avatar…</string>
+<string name="tavern_export_png_download_failed">Falló la descarga del avatar; elige una imagen local</string>
+<string name="tavern_export_json_success">JSON exportado: %1$s</string>
+<string name="tavern_export_failed">Error al exportar: %1$s</string>
+<string name="tavern_export_close">Cerrar</string>
+<string name="persona_page_title">Persona</string>
+<string name="tavern_card_author">Autor</string>
+<string name="tavern_card_version">Versión</string>
+<string name="tavern_card_extensions">Extensiones</string>
+<string name="tavern_card_extensions_count">%d campos, se conservan tal cual al exportar</string>
+<string name="tavern_card_assets">Recursos</string>
+<string name="tavern_card_assets_count">%d archivos</string>
+<string name="tavern_card_automation_id_desc">Sólo datos; todavía no se ejecuta</string>
+<string name="persona_page_create">Crear persona</string>
+<string name="persona_page_save">Guardar</string>
+<string name="persona_page_basic_info">Información básica</string>
+<string name="persona_page_name">Nombre</string>
+<string name="persona_page_short_name">Nombre corto</string>
+<string name="persona_page_short_name_desc">Si está vacío, usa el nombre</string>
+<string name="persona_page_description">Descripción</string>
+<string name="persona_page_position">Posición</string>
+<string name="persona_page_depth">Profundidad</string>
+<string name="persona_page_depth_desc">Rango oficial 0–9999; 0 = final del chat</string>
+<string name="persona_page_role">Rol</string>
+<string name="persona_page_locked_characters">Personajes bloqueados</string>
+<string name="persona_page_locked_desc">Cuando está bloqueada, sólo estos personajes recibirán esta persona</string>
+<string name="persona_page_locked_count">%d personajes bloqueados</string>
+<string name="persona_page_choose_characters">Elegir personajes</string>
+<string name="persona_page_hide_characters">Ocultar lista de personajes</string>
+<string name="group_chat_list_title">Chat grupal</string>
+<string name="group_chat_empty">Aún no hay chats grupales</string>
+<string name="group_chat_empty_hint">Toca + para crear uno</string>
+<string name="group_chat_create_title">Nuevo chat grupal</string>
+<string name="group_chat_name">Nombre del grupo</string>
+<string name="group_activation_strategy">Estrategia de activación</string>
+<string name="group_generation_mode">Modo de generación</string>
+<string name="group_auto_reply_delay">Retraso de respuesta automática: %d s</string>
+<string name="group_auto_reply_rounds">Rondas de respuesta automática: %1$s (0 = ilimitado)</string>
+<string name="group_allow_self_reply">Permitir autorrespuesta</string>
+<string name="group_members">Miembros (%1$d/%2$d)</string>
+<string name="group_create">Crear</string>
+<string name="group_cancel">Cancelar</string>
+<string name="group_mode_natural">Natural</string>
+<string name="group_mode_list">Lista</string>
+<string name="group_mode_manual">Manual</string>
+<string name="group_mode_pooled">Agrupado</string>
+<string name="group_mode_natural_desc">Detecta nombres en tu entrada + sorteo para elegir quién responde</string>
+<string name="group_mode_list_desc">Todos los miembros activados hablan por turnos</string>
+<string name="group_mode_manual_desc">Elige manualmente quién habla antes de cada respuesta</string>
+<string name="group_mode_pooled_desc">Da preferencia a miembros que no hayan hablado desde el último mensaje del usuario</string>
+<string name="group_gen_swap">Reemplazar</string>
+<string name="group_gen_append">Añadir</string>
+<string name="group_gen_append_disabled">Añadir desactivado</string>
+<string name="group_model">Modelo</string>
+<string name="group_self_reply_desc">La IA puede seguir hablando</string>
+<string name="group_auto_reply_delay_desc">Ponlo en 0 para desactivar la respuesta automática</string>
+<string name="group_rounds_unlimited">0 = ilimitado</string>
+<string name="group_member_settings">Ajustes del miembro</string>
+<string name="group_talkativeness">Locuacidad</string>
+<string name="slash_help_desc">Muestra los comandos disponibles (Help)</string>
+<string name="slash_sys_desc">Inserta un mensaje del sistema (Sys) sin activar generación</string>
+<string name="slash_sys_hint">[name=mostrado] [at=posición] [texto]</string>
+<string name="slash_sendas_desc">Inserta un mensaje del asistente (Send As); usa por defecto el personaje actual y permite indicar nombre y posición</string>
+<string name="slash_sendas_hint">[name=personaje] [at=posición] [texto]</string>
+<string name="slash_send_desc">Inserta un mensaje de usuario (Send) sin activar generación</string>
+<string name="slash_send_hint">[name=mostrado] [at=posición] [texto]</string>
+<string name="slash_persona_desc">Cambia de persona / nombre temporal de usuario (Persona): alias de /persona-set</string>
+<string name="slash_persona_hint">[mode=lookup|temp|all] [nombre de persona]</string>
+<string name="slash_trigger_desc">Activa una respuesta de la IA (Trigger) sin añadir un mensaje</string>
+<string name="slash_sysgen_desc">Genera una narración del sistema (Sysgen) y la inserta en el chat</string>
+<string name="slash_sysgen_hint">[name=mostrado] [at=posición] [trim=true] [prompt]</string>
+<string name="slash_char_update_desc">Actualiza campos de la tarjeta de personaje (Char Update)</string>
+<string name="slash_char_update_hint">[field=value] p. ej. description=nueva</string>
+<string name="slash_char_duplicate_desc">Duplica la tarjeta del personaje actual (Char Duplicate)</string>
+<string name="slash_rename_char_desc">Cambia el nombre del personaje (Rename Char)</string>
+<string name="slash_rename_char_hint">[nuevo nombre]</string>
+<string name="slash_continue_desc">Continúa la última respuesta del asistente (Continue), con prompt adicional opcional</string>
+<string name="slash_continue_hint">[prompt opcional]</string>
+<string name="slash_impersonate_desc">Genera un borrador de tu respuesta (Impersonate) en el campo de entrada</string>
+<string name="slash_impersonate_hint">[nota opcional]</string>
+<string name="slash_reroll_pick_desc">Vuelve a sortear detalles aleatorios estables (Reroll Pick)</string>
+<string name="slash_reroll_pick_hint">[semilla opcional]</string>
+<string name="slash_gen_desc">Genera texto silenciosamente (Gen); el resultado va al campo de entrada</string>
+<string name="slash_gen_hint">[trim=true] [as=char] [length=tokens] [name=nombre] prompt (predeterminado: como instrucción del sistema)</string>
+<string name="slash_listvar_desc">Lista variables del chat (List Var)</string>
+<string name="slash_setvar_desc">Define una variable del chat (Set Var)</string>
+<string name="slash_setvar_hint">[nombre] [valor]</string>
+</resources>

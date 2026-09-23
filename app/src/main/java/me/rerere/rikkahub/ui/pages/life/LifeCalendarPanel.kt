@@ -44,11 +44,11 @@ private data class CalendarCategory(
 )
 
 private val calendarCategories = listOf(
-    CalendarCategory("life", "生活", "🌷", Color(0xFFE97994), Color(0xFFFFEAF0)),
-    CalendarCategory("date", "约会", "💕", Color(0xFFD76A98), Color(0xFFFFE8F3)),
-    CalendarCategory("todo", "安排", "☁", Color(0xFF6F98C8), Color(0xFFEAF3FF)),
-    CalendarCategory("health", "身体", "🌿", Color(0xFF79A985), Color(0xFFEAF5EC)),
-    CalendarCategory("memory", "纪念", "🎀", Color(0xFF9A7BC2), Color(0xFFF2EBFA)),
+    CalendarCategory("life", "Vida", "🌷", Color(0xFFE97994), Color(0xFFFFEAF0)),
+    CalendarCategory("date", "Cita", "💕", Color(0xFFD76A98), Color(0xFFFFE8F3)),
+    CalendarCategory("todo", "Plan", "☁", Color(0xFF6F98C8), Color(0xFFEAF3FF)),
+    CalendarCategory("health", "Salud", "🌿", Color(0xFF79A985), Color(0xFFEAF5EC)),
+    CalendarCategory("memory", "Aniversario", "🎀", Color(0xFF9A7BC2), Color(0xFFF2EBFA)),
 )
 
 private fun calendarCategory(id: String): CalendarCategory =
@@ -112,7 +112,7 @@ fun LifeCalendarPanel() {
                 Column {
                     Text(formatSelectedDate(selectedDay), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
                     Text(
-                        if (selectedEvents.isEmpty()) "今天留一点空白也很好。" else "${selectedEvents.size} 个小安排",
+                        if (selectedEvents.isEmpty()) "También está bien dejar un poco de espacio libre hoy." else "${selectedEvents.size}  pequeños planes",
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         style = MaterialTheme.typography.bodySmall,
                     )
@@ -124,7 +124,7 @@ fun LifeCalendarPanel() {
                         containerColor = Color(0xFFFFE2EB),
                         contentColor = Color(0xFFA94F6B),
                     ),
-                ) { Text("＋ 新安排") }
+                ) { Text("＋ Nuevo plan") }
             }
         }
         if (selectedEvents.isEmpty()) {
@@ -193,7 +193,7 @@ private fun CalendarHeader(
                 Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     Text("୨୧  MY CALENDAR", color = Color(0xFFB55D79), style = MaterialTheme.typography.labelLarge)
                     Text(formatMonthTitle(month), style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold, color = Color(0xFF53464C))
-                    Text("把日子排得清楚，也留一点可爱的空白。", color = Color(0xFF8A737D), style = MaterialTheme.typography.bodySmall)
+                    Text("Organiza el día con claridad y deja también un poco de espacio libre.", color = Color(0xFF8A737D), style = MaterialTheme.typography.bodySmall)
                 }
                 Surface(shape = CircleShape, color = Color(0xFFFFE4EC)) {
                     Box(Modifier.size(46.dp), contentAlignment = Alignment.Center) { Text("📅", style = MaterialTheme.typography.titleLarge) }
@@ -204,7 +204,7 @@ private fun CalendarHeader(
                     OutlinedButton(onClick = onPrevious, shape = CircleShape, contentPadding = PaddingValues(0.dp), modifier = Modifier.size(42.dp)) { Text("‹", style = MaterialTheme.typography.titleLarge) }
                     OutlinedButton(onClick = onNext, shape = CircleShape, contentPadding = PaddingValues(0.dp), modifier = Modifier.size(42.dp)) { Text("›", style = MaterialTheme.typography.titleLarge) }
                 }
-                TextButton(onClick = onToday) { Text("今天", color = Color(0xFFB45E7A), fontWeight = FontWeight.SemiBold) }
+                TextButton(onClick = onToday) { Text("Hoy", color = Color(0xFFB45E7A), fontWeight = FontWeight.SemiBold) }
             }
         }
     }
@@ -218,7 +218,7 @@ private fun CalendarMonthGrid(
     onSelect: (Long) -> Unit,
 ) {
     val days = buildMonthCells(month)
-    val weekLabels = listOf("日", "一", "二", "三", "四", "五", "六")
+    val weekLabels = listOf("Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb")
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(24.dp),
@@ -316,14 +316,14 @@ private fun CalendarEventCard(
         Row(Modifier.padding(14.dp), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.Top) {
             Surface(modifier = Modifier.width(4.dp).height(62.dp), shape = RoundedCornerShape(99.dp), color = category.dot) {}
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(if (event.allDay) "全天" else formatEventTime(event.eventAt), color = category.dot, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
+                Text(if (event.allDay) "Todo el día" else formatEventTime(event.eventAt), color = category.dot, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
                 Text(event.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
                 if (event.detail.isNotBlank()) Text(event.detail, color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall, maxLines = 2)
                 Text("${category.emoji} ${category.label}", color = category.dot, style = MaterialTheme.typography.labelSmall)
             }
             Column(horizontalAlignment = Alignment.End) {
-                TextButton(onClick = onSystemCalendar, contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp)) { Text("同步") }
-                TextButton(onClick = onDelete, contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp), colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant)) { Text("删除") }
+                TextButton(onClick = onSystemCalendar, contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp)) { Text("Sincronizar") }
+                TextButton(onClick = onDelete, contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp), colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant)) { Text("Eliminar") }
             }
         }
     }
@@ -343,9 +343,9 @@ private fun CalendarEmptyState(onAdd: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(7.dp),
         ) {
             Text("☁️🌷", style = MaterialTheme.typography.headlineMedium)
-            Text("这一天还空空的", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-            Text("留白也很好，或者悄悄放一个小安排进来。", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
-            TextButton(onClick = onAdd) { Text("＋ 放一个安排") }
+            Text("Este día todavía está vacío", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+            Text("Dejarlo libre también está bien, o puedes añadir un pequeño plan.", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+            TextButton(onClick = onAdd) { Text("＋ Añadir un plan") }
         }
     }
 }
@@ -373,15 +373,15 @@ private fun CalendarEventEditor(
         shape = RoundedCornerShape(26.dp),
         title = {
             Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                Text(if (initial == null) "🌷 新建日程" else "🎀 编辑日程")
-                Text("像苹果日历一样清爽，但再软一点。", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+                Text(if (initial == null) "🌷 Nuevo evento" else "🎀 Editar evento")
+                Text("Limpio como Apple Calendar, pero un poco más cálido.", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
             }
         },
         text = {
             Column(Modifier.heightIn(max = 600.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                OutlinedTextField(title, { title = it }, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), label = { Text("安排标题") }, singleLine = true)
-                OutlinedTextField(detail, { detail = it }, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), label = { Text("地点、备注或想说的话") }, minLines = 3)
-                Text("颜色分类", style = MaterialTheme.typography.labelLarge)
+                OutlinedTextField(title, { title = it }, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), label = { Text("Título del evento") }, singleLine = true)
+                OutlinedTextField(detail, { detail = it }, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), label = { Text("Lugar, notas o algo que quieras decir") }, minLines = 3)
+                Text("Categoría de color", style = MaterialTheme.typography.labelLarge)
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     items(calendarCategories) { item ->
                         FilterChip(
@@ -396,8 +396,8 @@ private fun CalendarEventEditor(
                 OutlinedButton(onClick = { showDatePicker = true }, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) { Text("📅 ${formatSelectedDate(date)}") }
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        Text("全天")
-                        Text("不需要具体时间的小日子", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+                        Text("Todo el día")
+                        Text("Evento sin hora específica", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
                     }
                     Switch(checked = allDay, onCheckedChange = { allDay = it })
                 }
@@ -423,17 +423,17 @@ private fun CalendarEventEditor(
                 },
                 shape = RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.filledTonalButtonColors(containerColor = Color(0xFFFFDDE7), contentColor = Color(0xFFA64E69)),
-            ) { Text(if (initial == null) "放进日历 ♡" else "保存修改") }
+            ) { Text(if (initial == null) "Añadir al calendario ♡" else "Guardar cambios") }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("取消") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancelar") } },
     )
 
     if (showDatePicker) {
         val state = rememberDatePickerState(initialSelectedDateMillis = date)
         DatePickerDialog(
             onDismissRequest = { showDatePicker = false },
-            confirmButton = { TextButton(onClick = { date = state.selectedDateMillis ?: date; showDatePicker = false }) { Text("确定") } },
-            dismissButton = { TextButton(onClick = { showDatePicker = false }) { Text("取消") } },
+            confirmButton = { TextButton(onClick = { date = state.selectedDateMillis ?: date; showDatePicker = false }) { Text("Aceptar") } },
+            dismissButton = { TextButton(onClick = { showDatePicker = false }) { Text("Cancelar") } },
         ) { DatePicker(state = state, showModeToggle = false) }
     }
 
@@ -441,10 +441,10 @@ private fun CalendarEventEditor(
         val state = rememberTimePickerState(initialHour = hour, initialMinute = minute, is24Hour = true)
         AlertDialog(
             onDismissRequest = { showTimePicker = false },
-            title = { Text("选择时间") },
+            title = { Text("Elegir hora") },
             text = { Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) { TimePicker(state = state) } },
-            confirmButton = { TextButton(onClick = { hour = state.hour; minute = state.minute; showTimePicker = false }) { Text("确定") } },
-            dismissButton = { TextButton(onClick = { showTimePicker = false }) { Text("取消") } },
+            confirmButton = { TextButton(onClick = { hour = state.hour; minute = state.minute; showTimePicker = false }) { Text("Aceptar") } },
+            dismissButton = { TextButton(onClick = { showTimePicker = false }) { Text("Cancelar") } },
         )
     }
 }
@@ -483,12 +483,12 @@ private fun loadCalendarEvents(context: Context): List<LifeCalendarEvent> = runC
                 add(
                     LifeCalendarEvent(
                         id = item.optLong("id", created),
-                        title = item.optString("title", "日程"),
+                        title = item.optString("title", "Evento"),
                         detail = item.optString("detail"),
                         eventAt = created,
                         category = when (item.optString("tag")) {
-                            "纪念日" -> "memory"
-                            "今天", "本周" -> "todo"
+                            "Aniversario" -> "memory"
+                            "Hoy", "Esta semana" -> "todo"
                             else -> "life"
                         },
                         createdAt = created,
@@ -571,6 +571,6 @@ private fun sameMonth(a: Long, b: Long): Boolean {
     return ca.get(Calendar.YEAR) == cb.get(Calendar.YEAR) && ca.get(Calendar.MONTH) == cb.get(Calendar.MONTH)
 }
 
-private fun formatMonthTitle(value: Long): String = SimpleDateFormat("yyyy年 M月", Locale.getDefault()).format(Date(value))
-private fun formatSelectedDate(value: Long): String = SimpleDateFormat("M月d日 EEEE", Locale.getDefault()).format(Date(value))
+private fun formatMonthTitle(value: Long): String = SimpleDateFormat("MMMM 'de' yyyy", Locale.getDefault()).format(Date(value))
+private fun formatSelectedDate(value: Long): String = SimpleDateFormat("EEEE d 'de' MMMM", Locale.getDefault()).format(Date(value))
 private fun formatEventTime(value: Long): String = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(value))
