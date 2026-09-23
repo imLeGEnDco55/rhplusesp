@@ -41,7 +41,7 @@ private enum class MusicSource { LOCAL, DIRECT_URL, NETEASE }
 private data class MusicTrack(
     val id: String = UUID.randomUUID().toString(),
     val title: String,
-    val artist: String = "未知歌手",
+    val artist: String = "Artista desconocido",
     val coverUrl: String = "",
     val source: MusicSource,
     val sourceUrl: String,
@@ -97,7 +97,7 @@ fun MusicSpacePanel() {
                     Intent.FLAG_GRANT_READ_URI_PERMISSION,
                 )
             }
-            val name = queryDisplayName(context, uri).substringBeforeLast('.').ifBlank { "本地音乐" }
+            val name = queryDisplayName(context, uri).substringBeforeLast('.').ifBlank { "Música local" }
             val track = MusicTrack(
                 title = name,
                 source = MusicSource.LOCAL,
@@ -136,22 +136,22 @@ fun MusicSpacePanel() {
                             verticalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             Text("🎧", style = MaterialTheme.typography.headlineMedium)
-                            Text("我们的歌单还是空的", fontWeight = FontWeight.SemiBold)
-                            Text("可以从网易云、本地文件或音频 URL 导入。", color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            FilledTonalButton(onClick = { showImportMenu = true }) { Text("＋ 导入第一首歌") }
+                            Text("Nuestra lista aún está vacía", fontWeight = FontWeight.SemiBold)
+                            Text("Puedes importar desde NetEase Cloud Music, archivos locales o una URL de audio.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            FilledTonalButton(onClick = { showImportMenu = true }) { Text("＋ Importar primera canción") }
                         }
                     }
                 }
             } else {
                 item {
                     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                        Text("歌曲 ${tracks.size}", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+                        Text("Canciones ${tracks.size}", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
                         Spacer(Modifier.weight(1f))
                         TextButton(onClick = {
                             togetherMode = !togetherMode
                             MusicPlaybackSession.setTogetherMode(togetherMode)
                         }) {
-                            Text(if (togetherMode) "💕 双人听" else "🎧 单人听")
+                            Text(if (togetherMode) "💕 Escuchar juntos" else "🎧 Escuchar solo")
                         }
                     }
                 }
@@ -189,7 +189,7 @@ fun MusicSpacePanel() {
         AlertDialog(
             onDismissRequest = { showImportMenu = false },
             shape = RoundedCornerShape(24.dp),
-            title = { Text("导入音乐") },
+            title = { Text("Importar música") },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     FilledTonalButton(
@@ -198,33 +198,33 @@ fun MusicSpacePanel() {
                             showNeteaseImport = true
                         },
                         modifier = Modifier.fillMaxWidth(),
-                    ) { Text("☁ 网易云音乐") }
+                    ) { Text("☁ NetEase Cloud Music") }
                     OutlinedButton(
                         onClick = {
                             showImportMenu = false
                             localImporter.launch(arrayOf("audio/*"))
                         },
                         modifier = Modifier.fillMaxWidth(),
-                    ) { Text("📁 本地音乐") }
+                    ) { Text("📁 Música local") }
                     OutlinedButton(
                         onClick = {
                             showImportMenu = false
                             showDirectUrlImport = true
                         },
                         modifier = Modifier.fillMaxWidth(),
-                    ) { Text("🔗 音频 URL") }
+                    ) { Text("🔗 URL de audio") }
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { showImportMenu = false }) { Text("取消") } },
+            dismissButton = { TextButton(onClick = { showImportMenu = false }) { Text("Cancelar") } },
         )
     }
 
     if (showNeteaseImport) {
         MusicTextImportDialog(
-            title = "从网易云音乐导入",
-            hint = "粘贴网易云分享文案或链接。歌曲会尽量同时导入公开歌词；暂时没有可播放音源的歌曲仍保留网易云来源。",
-            label = "网易云分享链接或分享文案",
+            title = "Importar desde NetEase Cloud Music",
+            hint = "Pega el texto o enlace compartido de NetEase Cloud Music. Se intentarán importar también las letras públicas; las canciones sin fuente reproducible conservarán su origen de NetEase.",
+            label = "Enlace o texto compartido de NetEase",
             loading = loading,
             error = error,
             onDismiss = {
@@ -242,7 +242,7 @@ fun MusicSpacePanel() {
                             persist((tracks + imported).distinctBy { it.sourceUrl })
                             showNeteaseImport = false
                         }
-                        .onFailure { error = it.message ?: "网易云链接解析失败" }
+                        .onFailure { error = it.message ?: "No se pudo analizar el enlace de NetEase" }
                     loading = false
                 }
             },
@@ -256,7 +256,7 @@ fun MusicSpacePanel() {
                 persist(
                     tracks + MusicTrack(
                         title = title,
-                        artist = artist.ifBlank { "未知歌手" },
+                        artist = artist.ifBlank { "Artista desconocido" },
                         source = MusicSource.DIRECT_URL,
                         sourceUrl = url,
                         playableUrl = url,
@@ -288,10 +288,10 @@ private fun MusicPlaylistHero(count: Int, onImport: () -> Unit, onPlayAll: () ->
                     }
                 }
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
-                    Text("我们的歌单", color = Color.White, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+                    Text("Nuestra lista", color = Color.White, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
                     Text("OUR PLAYLIST", color = Color.White.copy(alpha = 0.58f), style = MaterialTheme.typography.labelMedium)
-                    Text("把想和 TA 一起听的歌放在这里。", color = Color.White.copy(alpha = 0.76f), style = MaterialTheme.typography.bodySmall)
-                    Text("$count 首歌曲", color = Color.White.copy(alpha = 0.58f), style = MaterialTheme.typography.labelSmall)
+                    Text("Guarda aquí las canciones que quieras escuchar juntos.", color = Color.White.copy(alpha = 0.76f), style = MaterialTheme.typography.bodySmall)
+                    Text("$count  canciones", color = Color.White.copy(alpha = 0.58f), style = MaterialTheme.typography.labelSmall)
                 }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -300,13 +300,13 @@ private fun MusicPlaylistHero(count: Int, onImport: () -> Unit, onPlayAll: () ->
                     enabled = count > 0,
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE9484F)),
                     shape = RoundedCornerShape(18.dp),
-                ) { Text("▶ 播放全部") }
+                ) { Text("▶ Reproducir todo") }
                 OutlinedButton(
                     onClick = onImport,
                     shape = RoundedCornerShape(18.dp),
                     colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White),
                     border = BorderStroke(1.dp, Color.White.copy(alpha = 0.30f)),
-                ) { Text("＋ 导入音乐") }
+                ) { Text("＋ Importar música") }
             }
         }
     }
@@ -352,12 +352,12 @@ private fun MusicTrackRow(
                         append(" · ")
                         append(
                             when (track.source) {
-                                MusicSource.LOCAL -> "本地"
+                                MusicSource.LOCAL -> "Local"
                                 MusicSource.DIRECT_URL -> "URL"
-                                MusicSource.NETEASE -> "网易云"
+                                MusicSource.NETEASE -> "NetEase"
                             }
                         )
-                        if (track.lyricsLrc.isNotBlank()) append(" · 有歌词")
+                        if (track.lyricsLrc.isNotBlank()) append(" · Con letra")
                     },
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -366,7 +366,7 @@ private fun MusicTrackRow(
                 )
             }
             if (track.playableUrl.isBlank()) {
-                Text("打开", color = Color(0xFFE9484F), style = MaterialTheme.typography.labelMedium)
+                Text("Abrir", color = Color(0xFFE9484F), style = MaterialTheme.typography.labelMedium)
             } else {
                 Text("▶", color = Color(0xFFE9484F))
             }
@@ -402,7 +402,7 @@ private fun MusicMiniPlayer(
             Column(Modifier.weight(1f)) {
                 Text(track.title, color = Color.White, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Text(
-                    if (togetherMode) "💕 正和 TA 一起听" else track.artist,
+                    if (togetherMode) "💕 Escuchando juntos" else track.artist,
                     color = Color.White.copy(alpha = 0.62f),
                     style = MaterialTheme.typography.bodySmall,
                 )
@@ -444,9 +444,9 @@ private fun MusicTextImportDialog(
             }
         },
         confirmButton = {
-            FilledTonalButton(enabled = value.isNotBlank() && !loading, onClick = { onImport(value.trim()) }) { Text("导入") }
+            FilledTonalButton(enabled = value.isNotBlank() && !loading, onClick = { onImport(value.trim()) }) { Text("Importar") }
         },
-        dismissButton = { TextButton(enabled = !loading, onClick = onDismiss) { Text("取消") } },
+        dismissButton = { TextButton(enabled = !loading, onClick = onDismiss) { Text("Cancelar") } },
     )
 }
 
@@ -458,17 +458,17 @@ private fun MusicDirectUrlDialog(onDismiss: () -> Unit, onSave: (String, String,
     var lyrics by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("导入音频 URL") },
+        title = { Text("Importar URL de audio") },
         text = {
             Column(Modifier.heightIn(max = 560.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                OutlinedTextField(title, { title = it }, label = { Text("歌名") }, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(artist, { artist = it }, label = { Text("歌手（可选）") }, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(url, { url = it }, label = { Text("可播放的音频 URL") }, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(title, { title = it }, label = { Text("Título") }, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(artist, { artist = it }, label = { Text("Artista (opcional)") }, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(url, { url = it }, label = { Text("URL de audio reproducible") }, modifier = Modifier.fillMaxWidth())
                 OutlinedTextField(
                     lyrics,
                     { lyrics = it },
-                    label = { Text("LRC 歌词（可选）") },
-                    placeholder = { Text("[00:12.50]第一句歌词") },
+                    label = { Text("Letra LRC (opcional)") },
+                    placeholder = { Text("[00:12.50]Primera línea de la letra") },
                     minLines = 3,
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -478,20 +478,20 @@ private fun MusicDirectUrlDialog(onDismiss: () -> Unit, onSave: (String, String,
             TextButton(
                 enabled = title.isNotBlank() && (url.startsWith("http://") || url.startsWith("https://")),
                 onClick = { onSave(title.trim(), artist.trim(), url.trim(), lyrics.trim()) },
-            ) { Text("保存") }
+            ) { Text("Guardar") }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("取消") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancelar") } },
     )
 }
 
 private suspend fun importNeteaseTrack(client: OkHttpClient, rawInput: String): MusicTrack = withContext(Dispatchers.IO) {
-    val url = extractFirstUrl(rawInput) ?: error("没有找到网易云分享链接")
+    val url = extractFirstUrl(rawInput) ?: error("No se encontró un enlace compartido de NetEase")
     val request = Request.Builder().url(url).get().build()
     client.newCall(request).execute().use { response ->
-        if (!response.isSuccessful) error("网易云页面打开失败：HTTP ${response.code}")
+        if (!response.isSuccessful) error("No se pudo abrir la página de NetEase: HTTP ${response.code}")
         val finalUrl = response.request.url.toString()
         if (!finalUrl.contains("music.163.com") && !url.contains("music.163.com") && !url.contains("163cn.tv")) {
-            error("这看起来不是网易云音乐链接")
+            error("Esto no parece un enlace de NetEase Cloud Music")
         }
         val html = response.body.string()
         val type = when {
@@ -502,14 +502,14 @@ private suspend fun importNeteaseTrack(client: OkHttpClient, rawInput: String): 
         val id = Regex("(?:${type}\\?id=|/${type}/)(\\d+)").find(finalUrl)?.groupValues?.getOrNull(1).orEmpty()
         val title = extractMeta(html, "og:title")
             .ifBlank { extractShareTitle(rawInput) }
-            .ifBlank { if (type == "playlist") "网易云歌单${id.takeIf { it.isNotBlank() }?.let { " #$it" }.orEmpty()}" else "网易云歌曲${id.takeIf { it.isNotBlank() }?.let { " #$it" }.orEmpty()}" }
+            .ifBlank { if (type == "playlist") "Lista de NetEase${id.takeIf { it.isNotBlank() }?.let { " #$it" }.orEmpty()}" else "Canción de NetEase${id.takeIf { it.isNotBlank() }?.let { " #$it" }.orEmpty()}" }
         val description = extractMeta(html, "og:description")
-        val artist = description.substringBefore("。").substringBefore("-").trim().ifBlank { "网易云音乐" }
+        val artist = description.substringBefore("。").substringBefore("-").trim().ifBlank { "NetEase Cloud Music" }
         val cover = extractMeta(html, "og:image")
         val lyric = if (type == "song" && id.isNotBlank()) fetchNeteaseLyric(client, id) else ""
         MusicTrack(
             title = title.cleanNeteaseTitle(),
-            artist = if (type == "playlist") "网易云歌单" else artist,
+            artist = if (type == "playlist") "Lista de NetEase" else artist,
             coverUrl = cover,
             source = MusicSource.NETEASE,
             sourceUrl = finalUrl,
@@ -542,7 +542,7 @@ private fun extractFirstUrl(text: String): String? =
 private fun extractShareTitle(text: String): String =
     text.lineSequence()
         .map { it.trim() }
-        .firstOrNull { it.isNotBlank() && !it.startsWith("http") && !it.contains("复制") }
+        .firstOrNull { it.isNotBlank() && !it.startsWith("http") && !it.contains("Copiar") }
         .orEmpty()
         .take(80)
 
@@ -563,8 +563,8 @@ private fun String.htmlUnescape(): String =
         .replace("&gt;", ">")
 
 private fun String.cleanNeteaseTitle(): String =
-    removeSuffix(" - 网易云音乐")
-        .removeSuffix("- 网易云音乐")
+    removeSuffix(" - NetEase Cloud Music")
+        .removeSuffix("- NetEase Cloud Music")
         .trim()
 
 private fun openMusicSource(context: Context, track: MusicTrack) {
@@ -589,8 +589,8 @@ private fun loadMusicTracks(context: Context): List<MusicTrack> = runCatching {
             add(
                 MusicTrack(
                     id = item.optString("id").ifBlank { UUID.randomUUID().toString() },
-                    title = item.optString("title", "未命名歌曲"),
-                    artist = item.optString("artist", "未知歌手"),
+                    title = item.optString("title", "Canción sin nombre"),
+                    artist = item.optString("artist", "Artista desconocido"),
                     coverUrl = item.optString("coverUrl"),
                     source = runCatching { MusicSource.valueOf(item.optString("source")) }.getOrDefault(MusicSource.NETEASE),
                     sourceUrl = item.optString("sourceUrl"),
