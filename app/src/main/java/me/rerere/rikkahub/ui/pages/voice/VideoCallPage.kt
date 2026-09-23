@@ -85,10 +85,10 @@ import me.rerere.rikkahub.ui.context.LocalSettings
 import kotlin.uuid.Uuid
 
 /**
- * 剧情式视频电话。
+ * 剧情式Videollamada。
  *
  * 画面层只负责呈现和交互；ASR / AI / TTS / 音频路由继续由 VoiceCallService 统一管理。
- * 从通知返回正在进行的视频时会直接恢复通话画面，不再重复显示“开始通话”。
+ * 从通知返回正在进行的视频时会直接恢复通话画面，不再重复显示“Iniciar llamada”。
  */
 @Composable
 fun VideoCallPage(conversationId: Uuid, onBack: () -> Unit) {
@@ -110,13 +110,13 @@ fun VideoCallPage(conversationId: Uuid, onBack: () -> Unit) {
     var joined by remember(conversationId) { mutableStateOf(isActiveVideoCall) }
     var callEverActive by remember(conversationId) { mutableStateOf(isActiveVideoCall) }
 
-    // 点通知回到仍在运行的视频时直接恢复画面；不再让用户再点一次“开始通话”。
+    // 点通知回到仍在运行的视频时直接恢复画面；不再让用户再点一次“Iniciar llamada”。
     LaunchedEffect(isActiveVideoCall) {
         if (isActiveVideoCall) {
             joined = true
             callEverActive = true
         } else if (joined && callEverActive && activeConversationId != conversationKey) {
-            // 通知栏挂断 / Service 结束后，已经打开的视频页面自动退出，避免僵尸页面。
+            // 通知栏Colgar / Service 结束后，已经打开的视频页面自动退出，避免僵尸页面。
             onBack()
         }
     }
@@ -355,9 +355,9 @@ fun VideoCallPage(conversationId: Uuid, onBack: () -> Unit) {
                     placeholder = {
                         Text(
                             when (uiState.status) {
-                                VoiceCallStatus.Processing -> "TA 正在思考…"
-                                VoiceCallStatus.Speaking -> "可以打字打断 TA…"
-                                else -> "对话…"
+                                VoiceCallStatus.Processing -> "Está pensando…"
+                                VoiceCallStatus.Speaking -> "Puedes escribir para interrumpir…"
+                                else -> "Mensaje…"
                             },
                             color = Color.White.copy(.55f),
                         )
@@ -368,7 +368,7 @@ fun VideoCallPage(conversationId: Uuid, onBack: () -> Unit) {
                             enabled = typedInput.isNotBlank() &&
                                 service != null &&
                                 uiState.status != VoiceCallStatus.Processing,
-                        ) { Text("发送") }
+                        ) { Text("Enviar") }
                     },
                     maxLines = 3,
                 )
@@ -381,10 +381,10 @@ fun VideoCallPage(conversationId: Uuid, onBack: () -> Unit) {
                 ) {
                     CallButton(
                         if (uiState.isMuted) HugeIcons.MicOff01 else HugeIcons.Mic01,
-                        if (uiState.isMuted) "取消静音" else "静音",
+                        if (uiState.isMuted) "Activar micrófono" else "Silenciar",
                     ) { service?.toggleMute() }
 
-                    CallButton(HugeIcons.Camera01, if (cameraEnabled) "头像" else "前置摄像头") {
+                    CallButton(HugeIcons.Camera01, if (cameraEnabled) "Avatar" else "Cámara frontal") {
                         if (cameraEnabled) {
                             cameraEnabled = false
                         } else if (!cameraPermission.allRequiredPermissionsGranted) {
@@ -397,10 +397,10 @@ fun VideoCallPage(conversationId: Uuid, onBack: () -> Unit) {
 
                     CallButton(
                         HugeIcons.VolumeHigh,
-                        if (uiState.isSpeakerEnabled) "扬声器" else "听筒",
+                        if (uiState.isSpeakerEnabled) "Altavoz" else "Auricular",
                     ) { service?.toggleSpeaker() }
 
-                    CallButton(HugeIcons.Cancel01, "挂断", Color(0xFFE5484D)) {
+                    CallButton(HugeIcons.Cancel01, "Colgar", Color(0xFFE5484D)) {
                         service?.endCall()
                         VoiceCallService.stop(context)
                         onBack()
@@ -449,21 +449,21 @@ private fun VideoCallJoinPage(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(HugeIcons.Camera01, null, tint = Color(0xFFFFB7C5), modifier = Modifier.size(72.dp))
-            Text("视频电话", color = Color.White, fontSize = 28.sp, modifier = Modifier.padding(top = 20.dp))
+            Text("Videollamada", color = Color.White, fontSize = 28.sp, modifier = Modifier.padding(top = 20.dp))
             Text(
                 when {
-                    blockedByAnotherCall -> "当前已有其他通话进行中，请先挂断后再开始视频电话。"
+                    blockedByAnotherCall -> "当前已有其他通话进行中，请先Colgar后再开始Videollamada。"
                     visualSettings.selfViewMode == VideoCallSelfViewMode.FRONT_CAMERA ->
-                        "通话期间会持续使用麦克风；你已选择前置摄像头，开始后会请求摄像头权限。"
+                        "通话期间会持续使用麦克风；Tú已选择Cámara frontal，开始后会请求摄像头权限。"
                     else ->
-                        "通话期间会持续使用麦克风；右上角默认显示你的头像，不会自动打开摄像头。"
+                        "通话期间会持续使用麦克风；右上角默认显示Tú的Avatar，不会自动打开摄像头。"
                 },
                 color = if (blockedByAnotherCall) Color(0xFFFFB7C5) else Color.White.copy(.7f),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(vertical = 20.dp),
             )
-            Button(onClick = onJoin, enabled = !blockedByAnotherCall) { Text("开始通话") }
-            TextButton(onClick = onBack) { Text("取消") }
+            Button(onClick = onJoin, enabled = !blockedByAnotherCall) { Text("Iniciar llamada") }
+            TextButton(onClick = onBack) { Text("Cancelar") }
         }
     }
 }
@@ -482,7 +482,7 @@ private fun VideoCallUserBubble(text: String) {
             shape = RoundedCornerShape(18.dp),
         ) {
             Column(Modifier.padding(horizontal = 15.dp, vertical = 11.dp)) {
-                Text("你", color = Color.White.copy(.56f), fontSize = 11.sp)
+                Text("Tú", color = Color.White.copy(.56f), fontSize = 11.sp)
                 Text(
                     text,
                     color = Color.White.copy(.92f),
@@ -572,7 +572,7 @@ private fun VideoCallHeader(
             }
         }
         Text(
-            "正在和你视频",
+            "正在和Tú视频",
             color = Color.White.copy(.70f),
             fontSize = 13.sp,
             modifier = Modifier.padding(top = 5.dp),
@@ -581,11 +581,11 @@ private fun VideoCallHeader(
 }
 
 private fun videoStatusText(status: VoiceCallStatus): String = when (status) {
-    VoiceCallStatus.Idle -> "连接中"
-    VoiceCallStatus.Listening -> "正在听你说"
-    VoiceCallStatus.Processing -> "正在想"
-    VoiceCallStatus.Speaking -> "正在说话"
-    VoiceCallStatus.Error -> "通话异常"
+    VoiceCallStatus.Idle -> "Conectando"
+    VoiceCallStatus.Listening -> "正在听Tú说"
+    VoiceCallStatus.Processing -> "Pensando"
+    VoiceCallStatus.Speaking -> "Hablando"
+    VoiceCallStatus.Error -> "Error de llamada"
 }
 
 private fun videoStatusColor(status: VoiceCallStatus): Color = when (status) {
@@ -650,14 +650,14 @@ private fun UserAvatarPreview(
         when {
             customFile != null -> AsyncImage(
                 model = customFile,
-                contentDescription = "用户头像",
+                contentDescription = "用户Avatar",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
             )
 
             avatar is Avatar.Image -> AsyncImage(
                 model = avatar.url,
-                contentDescription = "用户头像",
+                contentDescription = "用户Avatar",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
             )
@@ -777,7 +777,7 @@ private fun storyPresentation(text: String): StoryPresentation {
     val actionRegex = Regex("\\*([^*]{2,80})\\*|\\(([^()]{2,80})\\)")
     val match = actionRegex.find(text)
     val action = match?.groupValues?.drop(1)?.firstOrNull { it.isNotBlank() }?.trim()
-        .orEmpty().ifBlank { "TA 正在镜头那边陪着你" }
+        .orEmpty().ifBlank { "TA 正在镜头那边陪着Tú" }
     return StoryPresentation(action, text.replace(actionRegex, "").trim())
 }
 
