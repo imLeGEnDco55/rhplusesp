@@ -26,25 +26,17 @@ import okhttp3.Request
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-/** 本定制版的仓库。GitHub Release 是权威来源，仓库根目录的 update.json 是兜底快照。 */
-private const val REPO = "MiaoWuNYA/rikkahub-sillytavern-android"
-private const val BRANCH = "huadeng"
+/** Both update sources belong to the same signed release of this fork. */
+private const val REPO = "imLeGEnDco55/rhplusesp"
 
 private const val API_URL = "https://api.github.com/repos/$REPO/releases/latest"
-private const val JSON_URL = "https://raw.githubusercontent.com/$REPO/$BRANCH/update.json"
+private const val JSON_URL = "https://github.com/$REPO/releases/latest/download/update.json"
 
-/**
- * 兜底源，按国内可达性排序。
- *
- * 注意 GitHub API 没有可用镜像：实测 ghproxy.net / ghfast.top / api.kkgithub.com 之流
- * 只代理原始文件与发布资源，拿它们套 API 地址一律 403。所以兜底不能指望 API，
- * 只能读仓库里的 update.json —— jsDelivr 是真 CDN，国内直连最稳，放第一位。
- */
+/** Release asset fallback when the API is unavailable; never use upstream's snapshot. */
 private val JSON_MIRRORS = listOf(
-    "https://cdn.jsdelivr.net/gh/$REPO@$BRANCH/update.json",
+    JSON_URL,
     "https://ghproxy.net/$JSON_URL",
     "https://ghfast.top/$JSON_URL",
-    JSON_URL,
 )
 
 /**
@@ -124,7 +116,7 @@ class UpdateChecker(
             version = tag.removePrefix("v"),
             publishedAt = release.publishedAt.orEmpty(),
             changelog = release.body.orEmpty(),
-            downloads = release.assets.map { asset ->
+            downloads = release.assets.filter { it.name.endsWith(".apk", ignoreCase = true) }.map { asset ->
                 UpdateDownload(
                     name = asset.name,
                     url = asset.browserDownloadUrl,
@@ -136,7 +128,7 @@ class UpdateChecker(
     }
 
     /**
-     * 兜底源：仓库里的 update.json。
+     * Fallback: update.json attached to the latest stable release.
      *
      * 能读到它就说明 GitHub API 这条路不通（被墙或限流），所以资源也一并改走代理。
      */

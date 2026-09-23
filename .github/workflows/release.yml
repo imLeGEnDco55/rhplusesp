@@ -1,0 +1,150 @@
+name: Android Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build unsigned release
+    if: github.repository == 'imLeGEnDco55/rhplusesp'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          submodules: recursive
+          persist-credentials: false
+      - uses: ./.github/actions/setup-android-build
+      - name: Build optimized release and run unit tests
+        run: >-
+          bash ./gradlew :app:assembleRelease :app:testDebugUnitTest
+          -Prikkahub.unsignedRelease=true -Prikkahub.enableFirebase=false
+          '-Dorg.gradle.jvmargs=-Xmx4g -Dfile.encoding=UTF-8'
+          --max-workers=2 --no-daemon --stacktrace --console=plain
+      - name: Validate tag against built APK metadata
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: >-
+          python .github/scripts/prepare_release.py
+          app/build/outputs/apk/release/output-metadata.json
+          "$RELEASE_TAG" unsigned
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: unsigned-release-${{ github.run_id }}
+          overwrite: true
+          path: unsigned/
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    name: Sign and publish APK
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: android-release
+    permissions:
+      contents: write
+    env:
+      RELEASE_TAG: ${{ github.ref_name }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      # No checkout, Gradle, npm, pip or build caches in the signing job.
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: unsigned-release-${{ github.run_id }}
+          path: unsigned
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407 # v3
+        with:
+          packages: platform-tools
+      - name: Install signing tools
+        run: sdkmanager 'build-tools;36.0.0'
+      - name: Sign and verify APK
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          for name in ANDROID_KEYSTORE_BASE64 ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Missing secret $name in environment android-release"
+              exit 1
+            fi
+          done
+          umask 077
+          key_file="$RUNNER_TEMP/rhplusesp-release.jks"
+          trap 'rm -f "$key_file"' EXIT
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$key_file"
+          tools="$ANDROID_HOME/build-tools/36.0.0"
+          mkdir -p dist
+          "$tools/zipalign" -P 16 -f 4 unsigned/app-unsigned.apk "$RUNNER_TEMP/aligned.apk"
+          "$tools/apksigner" sign --ks "$key_file" --ks-key-alias "$ANDROID_KEY_ALIAS" \
+            --ks-pass env:ANDROID_KEYSTORE_PASSWORD --key-pass env:ANDROID_KEY_PASSWORD \
+            --out "dist/rhplusesp-${RELEASE_TAG#v}-arm64-v8a.apk" "$RUNNER_TEMP/aligned.apk"
+          "$tools/apksigner" verify --verbose --print-certs "dist/rhplusesp-${RELEASE_TAG#v}-arm64-v8a.apk"
+          "$tools/zipalign" -c -P 16 4 "dist/rhplusesp-${RELEASE_TAG#v}-arm64-v8a.apk"
+      - name: Generate update manifest and checksums
+        run: |
+          python - <<'PY'
+          import datetime, hashlib, json, os, pathlib
+          info = json.loads(pathlib.Path('unsigned/release-info.json').read_text())
+          apk, = pathlib.Path('dist').glob('*.apk')
+          digest = hashlib.sha256(apk.read_bytes()).hexdigest()
+          pathlib.Path('dist/SHA256SUMS').write_text(f'{digest}  {apk.name}\n')
+          manifest = {
+              'version': info['version'], 'versionCode': info['versionCode'],
+              'publishedAt': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+              'changelog': f"Release {os.environ['RELEASE_TAG']} de rhplusesp.",
+              'downloads': [{
+                  'name': apk.name,
+                  'url': f"https://github.com/{os.environ['GH_REPO']}/releases/download/{os.environ['RELEASE_TAG']}/{apk.name}",
+                  'size': f'{apk.stat().st_size / 1024 / 1024:.1f} MB',
+              }],
+          }
+          pathlib.Path('dist/update.json').write_text(json.dumps(manifest, indent=2) + '\n')
+          PY
+      - name: Upload signed APK artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: rhplusesp-${{ github.ref_name }}-signed-${{ github.run_attempt }}
+          path: |
+            dist/*.apk
+            dist/update.json
+            dist/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 30
+      - name: Publish release after all assets are uploaded
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if gh release view "$RELEASE_TAG" --json isDraft > "$RUNNER_TEMP/release.json" 2>/dev/null; then
+            if [ "$(jq -r .isDraft "$RUNNER_TEMP/release.json")" != true ]; then
+              echo '::error::This release is already public; create a new version instead of replacing it.'
+              exit 1
+            fi
+          else
+            gh release create "$RELEASE_TAG" --verify-tag --draft --title "rhplusesp $RELEASE_TAG" --generate-notes
+          fi
+          gh release upload "$RELEASE_TAG" dist/*.apk dist/update.json dist/SHA256SUMS --clobber
+          if [[ "$RELEASE_TAG" == *-* ]]; then
+            gh release edit "$RELEASE_TAG" --draft=false --prerelease --latest=false
+          else
+            gh release edit "$RELEASE_TAG" --draft=false --prerelease=false --latest
+          fi
+      - name: Remove temporary signing material
+        if: always()
+        run: rm -f "$RUNNER_TEMP/rhplusesp-release.jks" "$RUNNER_TEMP/aligned.apk"
