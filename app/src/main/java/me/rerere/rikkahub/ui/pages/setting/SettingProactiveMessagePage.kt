@@ -88,7 +88,7 @@ fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
                 }
                 CardGroup {
                     item(
-                        headlineContent = { Text("启用Mensajes proactivos") },
+                        headlineContent = { Text("Activar mensajes proactivos") },
                         supportingContent = { Text("Al activarlo, la IA enviará un mensaje inmediatamente y después seguirá el intervalo configurado") },
                         trailingContent = {
                             Switch(
@@ -116,7 +116,7 @@ fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
                                     val remainMinutes = remaining / 60_000
                                     val remainSeconds = (remaining % 60_000) / 1000
                                     val sdf = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.getDefault())
-                                    Text("${sdf.format(java.util.Date(triggerTime))}（剩余 ${remainMinutes}分${remainSeconds}秒）")
+                                    Text("${sdf.format(java.util.Date(triggerTime))} (faltan ${remainMinutes} min ${remainSeconds} s)")
                                 } else {
                                     Text("Esperando programación...")
                                 }
@@ -125,7 +125,7 @@ fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
                     }
                     item(
                         headlineContent = { Text("Usar asistente") },
-                        supportingContent = { Text("Usar preferentemente el asistente actual: ${settings.getCurrentAssistant().name.ifBlank { "未命名" }}") }
+                        supportingContent = { Text("Usar preferentemente el asistente actual: ${settings.getCurrentAssistant().name.ifBlank { "Sin nombre" }}") }
                     )
                 }
             }
@@ -236,9 +236,9 @@ fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
                             headlineContent = { Text("Permiso de alarmas exactas") },
                             supportingContent = {
                                 if (hasExactAlarm) {
-                                    Text("已授予Permiso de alarmas exactas，定时触发将更准确")
+                                    Text("Permiso de alarmas exactas concedido; las activaciones serán más precisas")
                                 } else {
-                                    Text("未授予Permiso de alarmas exactas，触发时间可能不精确。已自动使用 WorkManager 作为备用方案。")
+                                    Text("No se concedió el permiso de alarmas exactas; la hora puede ser menos precisa. WorkManager se usa automáticamente como respaldo.")
                                 }
                             },
                             onClick = if (!hasExactAlarm) {
@@ -265,9 +265,9 @@ fun SettingProactiveMessagePage(vm: SettingVM = koinViewModel()) {
                         headlineContent = { Text("Optimización de batería") },
                         supportingContent = {
                             if (isIgnoring) {
-                                Text("已忽略Optimización de batería，后台触发更稳定")
+                                Text("La optimización de batería está ignorada; las activaciones en segundo plano serán más estables")
                             } else {
-                                Text("未忽略Optimización de batería，系统可能限制后台活动导致消息无法准时触发。建议关闭Optimización de batería。")
+                                Text("La optimización de batería puede limitar la actividad en segundo plano y retrasar mensajes. Se recomienda excluir la app.")
                             }
                         },
                         onClick = if (!isIgnoring) {
