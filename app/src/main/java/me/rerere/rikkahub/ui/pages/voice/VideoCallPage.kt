@@ -452,11 +452,11 @@ private fun VideoCallJoinPage(
             Text("Videollamada", color = Color.White, fontSize = 28.sp, modifier = Modifier.padding(top = 20.dp))
             Text(
                 when {
-                    blockedByAnotherCall -> "当前已有其他通话进行中，请先Colgar后再开始Videollamada。"
+                    blockedByAnotherCall -> "Ya hay otra llamada en curso. Cuélgala antes de iniciar una videollamada."
                     visualSettings.selfViewMode == VideoCallSelfViewMode.FRONT_CAMERA ->
-                        "通话期间会持续使用麦克风；Tú已选择Cámara frontal，开始后会请求摄像头权限。"
+                        "El micrófono permanecerá activo durante la llamada. Elegiste la cámara frontal y se solicitará permiso al comenzar."
                     else ->
-                        "通话期间会持续使用麦克风；右上角默认显示Tú的Avatar，不会自动打开摄像头。"
+                        "El micrófono permanecerá activo durante la llamada. Tu avatar se mostrará arriba a la derecha y la cámara no se encenderá automáticamente."
                 },
                 color = if (blockedByAnotherCall) Color(0xFFFFB7C5) else Color.White.copy(.7f),
                 textAlign = TextAlign.Center,
@@ -572,7 +572,7 @@ private fun VideoCallHeader(
             }
         }
         Text(
-            "正在和Tú视频",
+            "En videollamada contigo",
             color = Color.White.copy(.70f),
             fontSize = 13.sp,
             modifier = Modifier.padding(top = 5.dp),
@@ -582,7 +582,7 @@ private fun VideoCallHeader(
 
 private fun videoStatusText(status: VoiceCallStatus): String = when (status) {
     VoiceCallStatus.Idle -> "Conectando"
-    VoiceCallStatus.Listening -> "正在听Tú说"
+    VoiceCallStatus.Listening -> "Escuchándote"
     VoiceCallStatus.Processing -> "Pensando"
     VoiceCallStatus.Speaking -> "Hablando"
     VoiceCallStatus.Error -> "Error de llamada"
@@ -650,14 +650,14 @@ private fun UserAvatarPreview(
         when {
             customFile != null -> AsyncImage(
                 model = customFile,
-                contentDescription = "用户Avatar",
+                contentDescription = "Avatar del usuario",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
             )
 
             avatar is Avatar.Image -> AsyncImage(
                 model = avatar.url,
-                contentDescription = "用户Avatar",
+                contentDescription = "Avatar del usuario",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
             )
@@ -777,7 +777,7 @@ private fun storyPresentation(text: String): StoryPresentation {
     val actionRegex = Regex("\\*([^*]{2,80})\\*|\\(([^()]{2,80})\\)")
     val match = actionRegex.find(text)
     val action = match?.groupValues?.drop(1)?.firstOrNull { it.isNotBlank() }?.trim()
-        .orEmpty().ifBlank { "TA 正在镜头那边陪着Tú" }
+        .orEmpty().ifBlank { "Está contigo al otro lado de la cámara" }
     return StoryPresentation(action, text.replace(actionRegex, "").trim())
 }
 
