@@ -74,7 +74,7 @@
 <string name="setting_display_page_skip_crop_image_desc">Omite la interfaz de recorte después de importar imágenes o tomar fotos</string>
 <string name="setting_display_page_skip_crop_image_title">Omitir edición de imagen</string>
 <string name="setting_display_page_title">Ajustes de visualización</string>
-<string name="setting_display_page_tts_only_read_quoted_desc">Al activarlo, TTS sólo leerá el contenido entre comillas (incluidas " ", ' ', “”, ‘’, 「」, 『』)</string>
+<string name="setting_display_page_tts_only_read_quoted_desc">Al activarlo, TTS sólo leerá contenido entre comillas, incluidas variantes dobles, simples y tipográficas</string>
 <string name="setting_display_page_tts_only_read_quoted_title">TTS sólo lee contenido entre comillas</string>
 <string name="setting_display_page_tts_read_outside_brackets_desc">Al activarlo, TTS no leerá el contenido dentro de paréntesis o corchetes</string>
 <string name="setting_display_page_tts_read_outside_brackets_title">TTS omite contenido entre paréntesis</string>
