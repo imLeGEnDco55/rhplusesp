@@ -144,7 +144,7 @@ fun SettingWeixinBotPage(vm: SettingVM = koinViewModel()) {
                         supportingContent = {
                             Text(
                                 if (botSetting.botToken.isNotBlank()) {
-                                    "Sesión iniciada (Bot: ${botSetting.botId.ifBlank { "未知" }})"
+                                    "Sesión iniciada (Bot: ${botSetting.botId.ifBlank { "Desconocido" }})"
                                 } else {
                                     "Sin iniciar sesión"
                                 }
