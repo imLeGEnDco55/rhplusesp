@@ -27,7 +27,8 @@ jobs:
         run: >-
           bash ./gradlew :app:assembleRelease :app:testDebugUnitTest
           -Prikkahub.unsignedRelease=true -Prikkahub.enableFirebase=false
-          --no-daemon --stacktrace --console=plain
+          '-Dorg.gradle.jvmargs=-Xmx4g -Dfile.encoding=UTF-8'
+          --max-workers=2 --no-daemon --stacktrace --console=plain
       - name: Validate tag against built APK metadata
         env:
           RELEASE_TAG: ${{ github.ref_name }}

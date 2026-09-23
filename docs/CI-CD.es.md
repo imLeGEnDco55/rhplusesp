@@ -146,7 +146,9 @@ manualmente una release vacía: el pipeline la crea como borrador, adjunta todos
 los archivos y después la hace pública.
 
 El workflow compila `:app:assembleRelease` sin firma y ejecuta las pruebas
-unitarias. Valida el tag contra `output-metadata.json` generado por Android y
+unitarias. Reserva 4 GB de heap para Gradle y limita el trabajo paralelo a dos
+workers, porque la optimización R8 de esta app supera el margen de los 2 GB
+heredados. Valida el tag contra `output-metadata.json` generado por Android y
 rechaza versiones discordantes, APK debug o múltiples APK inesperados. Otro
 runner alinea, firma y verifica el APK con Android Build Tools.
 
@@ -199,7 +201,7 @@ Validación local de la lógica de publicación:
 python -m unittest discover -s .github/scripts -p 'test_*.py'
 actionlint .github/workflows/build.yml .github/workflows/release.yml
 ./gradlew :app:assembleDebug :app:testDebugUnitTest -Prikkahub.enableFirebase=false
-./gradlew :app:assembleRelease -Prikkahub.unsignedRelease=true -Prikkahub.enableFirebase=false
+./gradlew :app:assembleRelease -Prikkahub.unsignedRelease=true -Prikkahub.enableFirebase=false '-Dorg.gradle.jvmargs=-Xmx4g -Dfile.encoding=UTF-8' --max-workers=2
 ```
 
 Fuentes: [compatibilidad de AGP 9.4](https://developer.android.com/build/releases/agp-9-4-0-release-notes),
