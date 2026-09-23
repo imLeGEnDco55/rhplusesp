@@ -94,24 +94,24 @@ fun SettingQqBotPage(vm: SettingVM = koinViewModel()) {
             contentPadding = contentPadding + PaddingValues(8.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // 说明
+            // Información
             item {
                 CardGroup(
-                    title = { Text("说明") },
+                    title = { Text("Información") },
                     modifier = Modifier.padding(horizontal = 8.dp)
                 ) {
                     item(
                         leadingContent = { Icon(imageVector = HugeIcons.Message01, contentDescription = null) },
-                        headlineContent = { Text("QQ Bot 是什么") },
-                        supportingContent = { Text("把你的 QQ 机器人变成 AI 入口: 别人私聊你的 bot, 会由当前助手回复. 只处理私聊消息.") }
+                        headlineContent = { Text("Qué es QQ Bot") },
+                        supportingContent = { Text("Convierte tu bot de QQ en una entrada a la IA: los mensajes privados recibidos serán respondidos por el asistente actual. Sólo procesa chats privados.") }
                     )
                     item(
-                        headlineContent = { Text("怎么获取 AppID 和 Secret") },
-                        supportingContent = { Text("1. 去 q.qq.com 注册开发者并创建机器人\n2. 在机器人管理页面找到 AppID 和 AppSecret\n3. 复制填到下面") }
+                        headlineContent = { Text("Cómo obtener AppID y Secret") },
+                        supportingContent = { Text("1. Regístrate como desarrollador en q.qq.com y crea un bot\n2. Busca AppID y AppSecret en la administración del bot\n3. Cópialos abajo") }
                     )
                     item(
-                        headlineContent = { Text("关联助手") },
-                        supportingContent = { Text("固定使用当前助手: ${settings.getCurrentAssistant().name.ifBlank { "未命名" }}") }
+                        headlineContent = { Text("Asistente vinculado") },
+                        supportingContent = { Text("Usar siempre el asistente actual: ${settings.getCurrentAssistant().name.ifBlank { "未命名" }}") }
                     )
                 }
             }
@@ -119,7 +119,7 @@ fun SettingQqBotPage(vm: SettingVM = koinViewModel()) {
             // 凭证
             item {
                 CardGroup(
-                    title = { Text("机器人凭证") },
+                    title = { Text("Credenciales del bot") },
                     modifier = Modifier.padding(horizontal = 8.dp)
                 ) {
                     item(
@@ -145,7 +145,7 @@ fun SettingQqBotPage(vm: SettingVM = koinViewModel()) {
                             OutlinedTextField(
                                 value = botSetting.appSecret,
                                 onValueChange = { update(botSetting.copy(appSecret = it.trim())) },
-                                placeholder = { Text("机器人密钥") },
+                                placeholder = { Text("Clave del bot") },
                                 modifier = Modifier.fillMaxWidth(),
                                 singleLine = true,
                                 visualTransformation = PasswordVisualTransformation(),
@@ -163,12 +163,12 @@ fun SettingQqBotPage(vm: SettingVM = koinViewModel()) {
             // 开关
             item {
                 CardGroup(
-                    title = { Text("运行") },
+                    title = { Text("Ejecución") },
                     modifier = Modifier.padding(horizontal = 8.dp)
                 ) {
                     item(
-                        headlineContent = { Text("启用 QQ Bot") },
-                        supportingContent = { Text("开启后建立 WebSocket 连接监听私聊消息. 需先填 AppID 和 Secret.") },
+                        headlineContent = { Text("Activar QQ Bot") },
+                        supportingContent = { Text("Al activarlo, se abrirá una conexión WebSocket para escuchar mensajes privados. Primero debes indicar AppID y Secret.") },
                         trailingContent = {
                             Switch(
                                 checked = botSetting.enabled,
@@ -185,14 +185,14 @@ fun SettingQqBotPage(vm: SettingVM = koinViewModel()) {
                     )
                     if (botSetting.enabled && (botSetting.appId.isBlank() || botSetting.appSecret.isBlank())) {
                         item(
-                            headlineContent = { Text("⚠ 凭证未填写") },
-                            supportingContent = { Text("请先填写 AppID 和 AppSecret, 再开启") }
+                            headlineContent = { Text("⚠ Faltan credenciales") },
+                            supportingContent = { Text("Introduce AppID y AppSecret antes de activarlo") }
                         )
                     }
                     if (botSetting.enabled) {
                         item(
-                            headlineContent = { Text("运行提示") },
-                            supportingContent = { Text("token 会自动刷新. 被动回复需在收到消息 5 分钟内发出.") }
+                            headlineContent = { Text("Ejecución提示") },
+                            supportingContent = { Text("El token se renueva automáticamente. Las respuestas deben enviarse dentro de los 5 minutos posteriores a recibir el mensaje.") }
                         )
                     }
                 }
