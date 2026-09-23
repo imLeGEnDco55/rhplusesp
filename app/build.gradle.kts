@@ -91,7 +91,11 @@ android {
     }
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
+            // CI builds without a key; the isolated release job signs the finished APK.
+            if (!providers.gradleProperty("rikkahub.unsignedRelease")
+                    .map(String::toBoolean).getOrElse(false)) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             optimization {
                 enable = true
             }
