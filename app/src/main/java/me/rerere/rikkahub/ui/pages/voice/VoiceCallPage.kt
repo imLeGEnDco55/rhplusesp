@@ -289,7 +289,7 @@ fun VoiceCallPage(
                     Text(
                         when (uiState.status) {
                             VoiceCallStatus.Listening -> "Te escucho."
-                            VoiceCallStatus.Processing -> "TA Pensando怎么回答Tú…"
+                            VoiceCallStatus.Processing -> "Está pensando cómo responderte…"
                             VoiceCallStatus.Speaking -> "Está hablando…"
                             VoiceCallStatus.Error -> "Hubo un problema con la llamada"
                             VoiceCallStatus.Idle -> "Conectando audio…"
@@ -500,7 +500,7 @@ private fun ControlButton(
 
 private fun statusText(status: VoiceCallStatus): String = when (status) {
     VoiceCallStatus.Idle -> "Conectando"
-    VoiceCallStatus.Listening -> "正在听Tú说"
+    VoiceCallStatus.Listening -> "Escuchándote"
     VoiceCallStatus.Processing -> "Pensando"
     VoiceCallStatus.Speaking -> "Hablando"
     VoiceCallStatus.Error -> "Error de llamada"
